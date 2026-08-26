@@ -1,0 +1,55 @@
+schema_version: 1.0.0
+contract_version: 1.3.0
+id: t4h-release
+title: T4H Release
+category: core
+purpose: Build, approve, release, prove and recover when required.
+parameters:
+- key: release_request
+  input_type: string
+  requirement: required
+  description: Release request.
+- key: idempotency_key
+  input_type: string
+  requirement: optional
+  description: Stable release replay-protection key.
+capabilities:
+- build
+- deployment
+- proof
+- rollback
+steps:
+- workflow: t4h-build-and-verify
+  bindings:
+    request: '{{ release_request }}'
+  description: Build and verify the requested release change.
+- workflow: t4h-proof-check
+  bindings:
+    outcome: '{{ release_request }}'
+  description: Prove the release outcome.
+instructions: 'Execute a governed T4H release for: {{ release_request }}.
+
+  Build and verify first. Require explicit approval before deployment or other external effects. Complete final proof before
+  reporting release success.
+
+  Record the release idempotency key and pre-release revision. Suppress a duplicate release already proven successful. On
+  deployment failure invoke the rollback recipe with the recorded revision, verify recovery, and emit structured result and
+  receipt records.
+
+  '
+execution:
+  max_turns: 120
+  retry:
+    max_retries: 1
+    timeout_seconds: 1200
+    backoff_seconds:
+    - 10
+    recovery: invoke_t4h_rollback
+outputs:
+- release-result
+- proof-status
+- structured-result
+- receipt
+limitations:
+- Deployment requires approval and a live deployment tool
+

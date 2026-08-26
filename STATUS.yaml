@@ -1,18 +1,20 @@
-version: "1.2.0"
-package: t4h-goose
-status: READY_WITH_WARNINGS
-local_contract_integrity: PASS
-recipe_count: 15
-validation_receipt: receipts/runtime-integrity-v1.2.0.json
-known_live_inventory:
-  bad_mcp_callable_tools: 87
+version: "1.3.0"
+name: T4H Agent Operating Contract
+status: READY_WITH_RUNTIME_WARNINGS
+canonical_contract:
+  workflows: 15
+  source: contract/
+generated_adapters:
+  count: 5
+  names: [goose, aider, codex, claude-code, gemini-cli]
+  generated_files: 80
+conformance:
+  contract: PASS
+  adapter_drift: PASS
+  cross_adapter_dry_runs: 75/75
+  receipt: receipts/contract-adapter-conformance-v1.3.0.json
 known_unproven:
-  - bad_mcp_authoritative_scope_registry
-  - bad_mcp_transport_endpoint_or_command
-  - live_job_lifecycle
-  - live_task_lifecycle
-  - live_worker_lifecycle
-  - live_agent_lifecycle
-  - live_lock_lifecycle
-  - live_rollback_lifecycle
-next_verification: connect actual Mac Goose installation and live bad-mcp transport
+  - live runtime credentials and authority
+  - live end-to-end execution for each platform adapter
+  - external side-effect receipts
+rule: configuration and dry-run success must not be reported as live runtime success

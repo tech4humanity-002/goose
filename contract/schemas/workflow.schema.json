@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tech4humanity.com/schemas/agent-contract/workflow.schema.json",
+  "title": "T4H Platform-Neutral Workflow",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "contract_version", "id", "title", "category", "purpose", "parameters", "capabilities", "steps", "instructions", "execution", "outputs", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "contract_version": {"const": "1.3.0"},
+    "id": {"type": "string", "pattern": "^t4h-[a-z0-9-]+$"},
+    "title": {"type": "string", "minLength": 1},
+    "category": {"type": "string", "minLength": 1},
+    "purpose": {"type": "string", "minLength": 1},
+    "parameters": {"type": "array"},
+    "capabilities": {"type": "array"},
+    "steps": {"type": "array"},
+    "instructions": {"type": "string", "minLength": 1},
+    "execution": {
+      "type": "object",
+      "required": ["max_turns", "retry"],
+      "properties": {
+        "max_turns": {"type": "integer", "minimum": 1},
+        "retry": {
+          "type": "object",
+          "required": ["max_retries", "timeout_seconds", "backoff_seconds", "recovery"]
+        }
+      }
+    },
+    "outputs": {"type": "array", "contains": {"const": "structured-result"}},
+    "limitations": {"type": "array"}
+  }
+}

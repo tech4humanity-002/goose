@@ -1,0 +1,7 @@
+adapter: codex
+contract_version: "1.3.0"
+runtime_command: codex
+entrypoint: adapters/codex/bin/t4h-codex
+native_features: [non-interactive-exec, sandbox, approvals, git, tests]
+emulated_features: [workflow-composition, structured-results, receipts]
+unsupported_capabilities: [native-worker-schedules, native-lock-leases]

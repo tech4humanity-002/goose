@@ -1,0 +1,17 @@
+schema_version: "1.0.0"
+name: T4H Agent Operating Contract
+contract_version: "1.3.0"
+neutrality: [vendor, model, agent, runtime, tool]
+source_of_truth:
+  workflows: contract/workflows
+  policies: contract/policies
+  lifecycles: contract/lifecycles
+  runtime: contract/runtime
+  schemas: contract/schemas
+generated_adapters: [goose, aider, codex, claude-code, gemini-cli]
+rules:
+  generated_files_are_not_source: true
+  manual_generated_edits_prohibited: true
+  unsupported_capabilities_must_be_declared: true
+  adapters_must_pass_conformance: true
+  runtime_receipts_override_configuration_claims: true

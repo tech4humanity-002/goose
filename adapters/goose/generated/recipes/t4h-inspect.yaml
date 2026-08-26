@@ -1,0 +1,25 @@
+# GENERATED FILE — DO NOT EDIT
+# Source: contract/workflows/t4h-inspect.yaml
+# Source SHA-256: c9d381bc4b052127cc566da1cc3a9f6cc13e0b399dcdb57db56e72efb987b255
+version: 1.3.0
+title: T4H Inspect Workspace
+description: Inspect workspace state without mutation.
+parameters:
+- key: objective
+  input_type: string
+  requirement: required
+  description: Objective being investigated.
+instructions: 'Inspect the workspace for the objective: {{ objective }}.
+
+  Read relevant instructions first. Identify the repository, changed files, relevant implementation, tests and verification
+  mechanisms. Do not mutate anything.
+
+  '
+prompt: Execute canonical workflow t4h-inspect using its supplied parameters.
+settings:
+  max_turns: 30
+retry:
+  max_retries: 0
+  timeout_seconds: 300
+  backoff_seconds: []
+  recovery: report_blocked

@@ -1,72 +1,56 @@
-# T4H Goose Operating Layer v1.2.0 — Runtime Integrity
+# T4H Agent Operating Contract
 
-Initial executable/documentation layer for T4H on Goose. It is deliberately usable before every dependency is complete.
+Vendor-, model-, agent-, runtime- and tool-neutral operating contract for governed AI execution.
 
-## State
+This repository is no longer architected around Goose recipes. `contract/` is the only source of operating truth. Goose, Aider, Codex, Claude Code and Gemini CLI are generated adapters.
 
-- Goose: verify locally on the Mac.
-- T4H recipes/playbooks/policies/registries: included.
-- bad-mcp: 87 callable tools in the supplied inventory.
-- bad-mcp authoritative scope registry: PARTIAL during control-plane migration.
-- bad-mcp transport: intentionally not guessed.
-- Jobs/tasks/workers/agents/locks: represented as first-class lifecycles and recipes; live calls still require verification.
+## Source-of-truth hierarchy
 
-## Install
+1. `contract/manifest.yaml`
+2. `contract/workflows/`
+3. Contract policies, lifecycles, runtime rules and schemas
+4. `compiler/compile_adapters.py`
+5. Generated platform adapters
+6. Runtime receipts and telemetry
 
-```bash
-bash scripts/install.sh
-```
+Never edit files below `adapters/*/generated/`. CI rejects generated drift.
 
-The installer checks Goose, copies the package to `~/.config/goose/t4h-goose`, installs `~/bin/t4h-goose`, preserves the canonical Goose config, and adds `.goosehints` only when safe. The wrapper can inject a live bad-mcp endpoint with `T4H_BAD_MCP_URI` or a stdio command with `T4H_BAD_MCP_CMD`; neither is guessed by the package.
-
-Configure provider credentials with `goose configure`.
-
-## Verify
+## One contract change, every platform
 
 ```bash
-~/.config/goose/t4h-goose/scripts/doctor.sh
-```
+# Edit the canonical contract only
+$EDITOR contract/workflows/t4h-build-and-verify.yaml
 
-## Recipes
+# Regenerate every adapter
+python3 compiler/compile_adapters.py
 
-```bash
-export GOOSE_RECIPE_PATH="$HOME/.config/goose/t4h-goose/recipes"
-goose recipe list --verbose
-goose recipe validate "$HOME/.config/goose/t4h-goose/recipes/core/t4h-start.yaml"
-goose run --recipe "$HOME/.config/goose/t4h-goose/recipes/core/t4h-start.yaml"
-```
-
-Included workflows: start/orient, build-and-verify, change, release, rollback, locks, jobs, tasks, agent teams, workers, review and proof/verification.
-
-## Runtime integrity
-
-```bash
-python3 scripts/validate_runtime_integrity.py \
-  --receipt receipts/runtime-integrity-v1.2.0.json
+# Prove contract and adapter conformance
+python3 conformance/validate_contract.py
 python3 -m unittest discover -s tests -v
 ```
 
-The validator reconciles the filesystem, catalogue and index; checks recipe versions and contracts; resolves all subrecipe parameter mappings; and performs deterministic local dry-run execution. Live Goose and bad-mcp execution remain separate verification gates.
+The compiler currently produces 80 deterministic files: 15 workflows across five adapters plus one manifest per adapter.
 
-Installation is local-only. It never creates a repository, commits, tags or pushes. The installed wrapper preserves both supported bad-mcp injection modes and rejects ambiguous dual configuration.
+## Adapter entrypoints
 
-## T4H architecture rule
+```bash
+adapters/aider/bin/t4h-aider --workflow t4h-build-and-verify --param request="Fix the issue" --dry-run
+adapters/codex/bin/t4h-codex --workflow t4h-build-and-verify --param request="Fix the issue" --dry-run
+adapters/claude-code/bin/t4h-claude --workflow t4h-build-and-verify --param request="Fix the issue" --dry-run
+adapters/gemini-cli/bin/t4h-gemini --workflow t4h-build-and-verify --param request="Fix the issue" --dry-run
+adapters/goose/bin/t4h-goose --workflow t4h-build-and-verify --param request="Fix the issue" --dry-run
+```
 
-Goose is the orchestration/client layer. bad-mcp is the governed action plane. The standard 200-tool catalogue is reference/gap material, not a reason to load 200 tools into every context. Do not create duplicate direct GitHub/Drive/AWS MCP integrations when bad-mcp already provides the capability.
+Remove `--dry-run` only when the selected runtime is installed and authorised. Adapter declarations explicitly distinguish native, emulated and unsupported capabilities.
 
-## First live verification sequence
+## Contract scope
 
-1. `goose --version`
-2. `goose info -v`
-3. `goose recipe list --verbose`
-4. validate every T4H recipe
-5. run `t4h-start`
-6. connect the actual bad-mcp transport
-7. compare live discovery to the 87-tool inventory
-8. test jobs/tasks/workers/agents/locks
-9. verify approval behaviour
-10. run proof/health checks
+- Completion and evidence rules
+- Approval and authority boundaries
+- Tasks, jobs, workers, agents, locks, proof and rollback lifecycles
+- Idempotency, retry, timeout, recovery and quarantine
+- Structured result and receipt schemas
+- Capability requirements and declared platform gaps
+- Deterministic compilation and conformance validation
 
-For live bad-mcp transport, set exactly one of `T4H_BAD_MCP_URI` (Streamable HTTP) or `T4H_BAD_MCP_CMD` (stdio command) only after reading the actual Mac installation.
-
-This package is **READY WITH WARNINGS** until environment-dependent Goose and bad-mcp checks pass. Local contract integrity is independently testable in CI.
+Historical v1.2.0 Goose validation evidence remains in `receipts/`; it is evidence, not current source.

@@ -1,0 +1,46 @@
+schema_version: 1.0.0
+contract_version: 1.3.0
+id: t4h-lock
+title: T4H Lock Lifecycle
+category: core
+purpose: Protect shared mutable state with a bounded lock lifecycle.
+parameters:
+- key: resource
+  input_type: string
+  requirement: required
+  description: Canonical shared-resource identifier.
+- key: owner
+  input_type: string
+  requirement: required
+  description: Actor responsible for the lock.
+- key: idempotency_key
+  input_type: string
+  requirement: optional
+  description: Stable acquisition replay-protection key.
+capabilities:
+- bad-mcp-lock-tools
+steps: []
+instructions: 'Protect {{ resource }} for {{ owner }}. Inspect current lock state first. Derive or record an idempotency key.
+  Acquire only when absent, expired or already owned by the same idempotency key. Record lock_id, owner, acquired_at, lease
+  expiry and correlation_id. Verify ownership before mutation and renew only while progress is observable. Release in a finally-equivalent
+  path. If release fails, quarantine the resource, name a recovery owner and emit BLOCKED. Never steal a live lock. Emit structured
+  result and receipt records.
+
+  '
+execution:
+  max_turns: 50
+  retry:
+    max_retries: 2
+    timeout_seconds: 120
+    backoff_seconds:
+    - 2
+    - 10
+    recovery: quarantine_and_escalate_stale_lock
+outputs:
+- lock-id
+- ownership-status
+- structured-result
+- receipt
+limitations:
+- Lease renewal and stale-lock recovery require live validation
+
