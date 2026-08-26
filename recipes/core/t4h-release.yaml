@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "1.2.0"
 title: "T4H Release"
 description: "Governed release workflow composed from build, proof and release checks."
 parameters:
@@ -6,6 +6,10 @@ parameters:
     input_type: string
     requirement: required
     description: "Release request."
+  - key: idempotency_key
+    input_type: string
+    requirement: optional
+    description: "Stable release replay-protection key."
 sub_recipes:
   - name: build
     path: "../development/t4h-build-and-verify.yaml"
@@ -16,9 +20,17 @@ sub_recipes:
     path: "../subrecipes/t4h-proof-check.yaml"
     description: "Prove the release outcome."
     sequential_when_repeated: true
+    values:
+      outcome: "{{ release_request }}"
 instructions: |
   Execute a governed T4H release for: {{ release_request }}.
   Build and verify first. Require explicit approval before deployment or other external effects. Complete final proof before reporting release success.
+  Record the release idempotency key and pre-release revision. Suppress a duplicate release already proven successful. On deployment failure invoke the rollback recipe with the recorded revision, verify recovery, and emit structured result and receipt records.
 prompt: "Release: {{ release_request }}"
 settings:
   max_turns: 120
+retry:
+  max_retries: 1
+  timeout_seconds: 1200
+  backoff_seconds: [10]
+  recovery: invoke_t4h_rollback

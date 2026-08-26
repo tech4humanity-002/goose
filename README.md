@@ -1,4 +1,4 @@
-# T4H Goose Operating Layer
+# T4H Goose Operating Layer v1.2.0 — Runtime Integrity
 
 Initial executable/documentation layer for T4H on Goose. It is deliberately usable before every dependency is complete.
 
@@ -36,7 +36,19 @@ goose recipe validate "$HOME/.config/goose/t4h-goose/recipes/core/t4h-start.yaml
 goose run --recipe "$HOME/.config/goose/t4h-goose/recipes/core/t4h-start.yaml"
 ```
 
-Included workflows: start/orient, build-and-verify, jobs, tasks, agent team, workers, and proof/verification.
+Included workflows: start/orient, build-and-verify, change, release, rollback, locks, jobs, tasks, agent teams, workers, review and proof/verification.
+
+## Runtime integrity
+
+```bash
+python3 scripts/validate_runtime_integrity.py \
+  --receipt receipts/runtime-integrity-v1.2.0.json
+python3 -m unittest discover -s tests -v
+```
+
+The validator reconciles the filesystem, catalogue and index; checks recipe versions and contracts; resolves all subrecipe parameter mappings; and performs deterministic local dry-run execution. Live Goose and bad-mcp execution remain separate verification gates.
+
+Installation is local-only. It never creates a repository, commits, tags or pushes. The installed wrapper preserves both supported bad-mcp injection modes and rejects ambiguous dual configuration.
 
 ## T4H architecture rule
 
@@ -57,4 +69,4 @@ Goose is the orchestration/client layer. bad-mcp is the governed action plane. T
 
 For live bad-mcp transport, set exactly one of `T4H_BAD_MCP_URI` (Streamable HTTP) or `T4H_BAD_MCP_CMD` (stdio command) only after reading the actual Mac installation.
 
-This package is **READY WITH WARNINGS** until those environment-dependent checks pass.
+This package is **READY WITH WARNINGS** until environment-dependent Goose and bad-mcp checks pass. Local contract integrity is independently testable in CI.

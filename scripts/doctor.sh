@@ -10,12 +10,27 @@ if command -v git >/dev/null 2>&1; then pass "Git installed"; else fail "Git ins
 [[ -f "$HOME/.config/goose/config.yaml" ]] && pass "Goose config present" || warn "Goose config absent; run goose configure"
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 if [[ -d "$ROOT/recipes" ]]; then pass "Recipe directory present"; else fail "Recipe directory"; fi
+if ! command -v python3 >/dev/null 2>&1 || ! python3 -c 'import yaml' >/dev/null 2>&1; then
+  warn "Runtime-integrity validator requires Python 3 and PyYAML"
+elif python3 "$ROOT/scripts/validate_runtime_integrity.py" >/dev/null 2>&1; then
+  pass "Runtime-integrity contracts and local recipe dry-runs"
+else
+  fail "Runtime-integrity contracts and local recipe dry-runs"
+fi
 if command -v goose >/dev/null 2>&1; then
   while IFS= read -r -d '' f; do
     if goose recipe validate "$f" >/dev/null 2>&1; then pass "Recipe valid: ${f#$ROOT/}"; else fail "Recipe invalid: ${f#$ROOT/}"; fi
   done < <(find "$ROOT/recipes" -type f -name '*.yaml' -print0)
 else warn "Recipe validation deferred until Goose is installed"; fi
-if [[ -n "${T4H_BAD_MCP_URI:-}" ]]; then pass "T4H_BAD_MCP_URI supplied"; else warn "bad-mcp transport not configured; not guessed"; fi
+if [[ -n "${T4H_BAD_MCP_URI:-}" && -n "${T4H_BAD_MCP_CMD:-}" ]]; then
+  fail "Both bad-mcp transports supplied; configure exactly one"
+elif [[ -n "${T4H_BAD_MCP_URI:-}" ]]; then
+  pass "T4H_BAD_MCP_URI supplied"
+elif [[ -n "${T4H_BAD_MCP_CMD:-}" ]]; then
+  pass "T4H_BAD_MCP_CMD supplied"
+else
+  warn "bad-mcp transport not configured; not guessed"
+fi
 warn "bad-mcp authoritative scope registry is PARTIAL during control-plane migration"
 warn "87 callable tools are inventory evidence, not proven grants"
 echo "SUMMARY: PASS=$PASS WARN=$WARN FAIL=$FAIL"

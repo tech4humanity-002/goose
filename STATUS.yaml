@@ -1,6 +1,9 @@
-version: 1
+version: "1.2.0"
 package: t4h-goose
 status: READY_WITH_WARNINGS
+local_contract_integrity: PASS
+recipe_count: 15
+validation_receipt: receipts/runtime-integrity-v1.2.0.json
 known_live_inventory:
   bad_mcp_callable_tools: 87
 known_unproven:
@@ -11,4 +14,5 @@ known_unproven:
   - live_worker_lifecycle
   - live_agent_lifecycle
   - live_lock_lifecycle
+  - live_rollback_lifecycle
 next_verification: connect actual Mac Goose installation and live bad-mcp transport

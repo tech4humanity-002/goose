@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "1.2.0"
 title: "T4H Proof Check"
 description: "Perform a final proof check before a workflow claims completion."
 parameters:

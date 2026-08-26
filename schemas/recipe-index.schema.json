@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tech4humanity.com/schemas/goose/recipe-index.schema.json",
+  "title": "T4H Recipe Index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "registry", "review_policy", "recipes"],
+  "properties": {
+    "version": {"const": "1.2.0"},
+    "registry": {"const": "t4h-goose-recipes"},
+    "review_policy": {
+      "type": "object",
+      "required": ["default_review_interval_days", "overdue_action", "reviewer_worker", "no_silent_date_extension"]
+    },
+    "recipes": {
+      "type": "array",
+      "minItems": 15,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "path", "version", "category", "purpose", "resources", "outputs", "limitations", "review_due"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^t4h-[a-z0-9-]+$"},
+          "path": {"type": "string", "pattern": "^recipes/.+\\.yaml$"},
+          "version": {"const": "1.2.0"},
+          "category": {"type": "string", "minLength": 1},
+          "purpose": {"type": "string", "minLength": 1},
+          "resources": {"type": "array"},
+          "outputs": {"type": "array", "contains": {"const": "structured-result"}},
+          "limitations": {"type": "array"},
+          "review_due": {"type": "string", "format": "date"}
+        }
+      }
+    }
+  }
+}

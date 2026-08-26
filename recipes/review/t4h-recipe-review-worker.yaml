@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "1.2.0"
 title: "T4H Recipe Review Worker"
 description: "Review recipes whose review dates are due or overdue, validate them, and produce a review report without silently changing production recipes."
 parameters:

@@ -15,27 +15,8 @@ fi
 rm -rf "$INSTALL_DIR"
 cp -R "$ROOT" "$INSTALL_DIR"
 
-# Optionally create/update the canonical private GitHub recipe repository automatically.
-# This is enabled by default for the requested T4H bootstrap; set T4H_AUTO_CREATE_REPO=0 to skip.
-if [[ "${T4H_AUTO_CREATE_REPO:-1}" == "1" ]] && command -v gh >/dev/null 2>&1; then
-  if gh auth status >/dev/null 2>&1; then
-    OWNER="${T4H_GITHUB_OWNER:-TML-4PM}"
-    REPO="${T4H_GITHUB_REPO:-T4H-goose-recipes}"
-    FULL="$OWNER/$REPO"
-    if ! gh repo view "$FULL" >/dev/null 2>&1; then
-      (cd "$INSTALL_DIR" && gh repo create "$FULL" --private --source . --remote origin --push)
-    elif [[ -d "$INSTALL_DIR/.git" ]]; then
-      git -C "$INSTALL_DIR" remote get-url origin >/dev/null 2>&1 || git -C "$INSTALL_DIR" remote add origin "git@github.com:$FULL.git"
-      git -C "$INSTALL_DIR" push -u origin main
-    fi
-    git -C "$INSTALL_DIR" tag -f v1.1.0 2>/dev/null || true
-    git -C "$INSTALL_DIR" push origin v1.1.0 2>/dev/null || true
-    export T4H_GOOSE_REPO_URL="${T4H_GOOSE_REPO_URL:-https://github.com/$FULL.git}"
-    export GOOSE_RECIPE_GITHUB_REPO="$FULL"
-  else
-    echo "WARN: gh is installed but not authenticated; remote recipe repo creation skipped." >&2
-  fi
-fi
+# Installation is deliberately local-only. Repository creation, commits, tags and
+# pushes are release operations and must never occur as an installer side effect.
 
 # Prefer a canonical GitHub recipe repository when configured; otherwise use the bundled recipes.
 if [[ -n "${T4H_GOOSE_REPO_URL:-}" ]]; then
@@ -68,7 +49,16 @@ cat > "$WRAPPER" <<'WRAP'
 #!/usr/bin/env bash
 set -euo pipefail
 export GOOSE_RECIPE_PATH="$HOME/.config/goose/t4h-recipes${GOOSE_RECIPE_PATH:+:$GOOSE_RECIPE_PATH}"
-exec goose "$@"
+ARGS=()
+if [[ -n "${T4H_BAD_MCP_URI:-}" && -n "${T4H_BAD_MCP_CMD:-}" ]]; then
+  echo "Set only one of T4H_BAD_MCP_URI or T4H_BAD_MCP_CMD." >&2
+  exit 64
+elif [[ -n "${T4H_BAD_MCP_URI:-}" ]]; then
+  ARGS+=(--with-streamable-http-extension "$T4H_BAD_MCP_URI")
+elif [[ -n "${T4H_BAD_MCP_CMD:-}" ]]; then
+  ARGS+=(--with-extension "$T4H_BAD_MCP_CMD")
+fi
+exec goose "${ARGS[@]}" "$@"
 WRAP
 chmod +x "$WRAPPER"
 

@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.2.0",
+  "suite": "runtime-integrity-local-contract-execution",
+  "timestamp": "2026-08-26T09:00:00Z",
+  "execution_mode": "deterministic-local-dry-run",
+  "goose_runtime": "UNPROVEN_NOT_INSTALLED",
+  "recipe_count": 15,
+  "recipes": [
+    {
+      "recipe": "recipes/agents/t4h-agent-team.yaml",
+      "prompt_sha256": "018bb1ea61c881a101069deac2e4c0838608dc87d0ad7bb49c1e082d781167e9",
+      "instructions_sha256": "4ec5be6bd24774d0c32caa911495e81d2c9c6e7b05907aa3cfd2c7941287cbfe",
+      "resolved_subrecipes": [],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/core/t4h-change-and-proof.yaml",
+      "prompt_sha256": "7eeefd817ba0f151bdc135259b036740690f1cb0d9136cf9512cd17270597e8b",
+      "instructions_sha256": "e41a30e9482d92863e41f429c7e526e9458097be6c3c861abc6998c113cf7adb",
+      "resolved_subrecipes": [
+        "recipes/subrecipes/t4h-inspect.yaml",
+        "recipes/subrecipes/t4h-proof-check.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/core/t4h-lock.yaml",
+      "prompt_sha256": "c05e769b705ff9b136c5058bc315de92193f1a68c0dbb4c70a8eaed6f04201a9",
+      "instructions_sha256": "ef7f5006de623b3c3d51e923d0c3b62451c61a1e659611e0e2ccd99c608a3e51",
+      "resolved_subrecipes": [],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/core/t4h-release.yaml",
+      "prompt_sha256": "b86ab318d7cec31c0d462eeb48e994d9b2b3a61ee5db49707c813bbb5579e2ed",
+      "instructions_sha256": "93caeedf93d5e73ea2907831faee58dc2b49650e5eb954dce08b9ac2bd26cea3",
+      "resolved_subrecipes": [
+        "recipes/development/t4h-build-and-verify.yaml",
+        "recipes/subrecipes/t4h-proof-check.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/core/t4h-rollback.yaml",
+      "prompt_sha256": "e3289d0e88f9c679d0c3d53c2eedf1731599a2d4bc1e88b48b53df08a4d29ff5",
+      "instructions_sha256": "614eb6c3ede54d00f7e35bb85167d6ff79af301587ef51f2eccc10a26979d8b5",
+      "resolved_subrecipes": [
+        "recipes/subrecipes/t4h-inspect.yaml",
+        "recipes/subrecipes/t4h-proof-check.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/core/t4h-start.yaml",
+      "prompt_sha256": "04b18f2b8b88e514a1071714fc4d340d3c58d49ac90849460d08b5463078bae9",
+      "instructions_sha256": "1e24d7518a1046f242b48b013a1cf21e00f8c7d876a018f480c892229f956bc0",
+      "resolved_subrecipes": [],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/development/t4h-build-and-verify.yaml",
+      "prompt_sha256": "55f852d34e751b3f8ac82d482cbb75e96064f775415562b787a451a6371aabc8",
+      "instructions_sha256": "fbdbc48f8983ee63f3ddef654d8cfac51cf22556ff766be12f8e6495ad7babb2",
+      "resolved_subrecipes": [
+        "recipes/subrecipes/t4h-inspect.yaml",
+        "recipes/subrecipes/t4h-test.yaml",
+        "recipes/subrecipes/t4h-proof-check.yaml"
+      ],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/evidence/t4h-proof.yaml",
+      "prompt_sha256": "4552b324708e348a08545b4aba5d3a79f515232b0366fc7fe5f292069e027add",
+      "instructions_sha256": "74d353b9e70eb9a60a811594f8781c713017bf078136b9fc60ff7829a9e0f144",
+      "resolved_subrecipes": [],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/jobs/t4h-job.yaml",
+      "prompt_sha256": "b2ff4719ce86d0f187f74b0fa1dea98d96ec674251441fa9829f1a6f9bf6bfb9",
+      "instructions_sha256": "3934a3a74fa52d717ca2f6a29d2dc6d55a740d1522a58520cc868bcb1542ee4c",
+      "resolved_subrecipes": [],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/review/t4h-recipe-review-worker.yaml",
+      "prompt_sha256": "6f394dcd8bda391e40d696fe6f5ce27e5a990e261941f8450c32a552cf811ab1",
+      "instructions_sha256": "d515a7f232597dd12a0c85e57c0fd248155460db4aaf1a87fdd4b0d08e0862c5",
+      "resolved_subrecipes": [],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/subrecipes/t4h-inspect.yaml",
+      "prompt_sha256": "c9e463de25dbc8f080054b9e028f6a3ef4712f1512fbd62876eaca65349aad12",
+      "instructions_sha256": "2451750c89d5cd1276210918c1e9053f3966dd1e4040168bd5c967949124241f",
+      "resolved_subrecipes": [],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/subrecipes/t4h-proof-check.yaml",
+      "prompt_sha256": "0e3bde5df5dc679b40ef72bf937c05726f589ff14574244e324e6acf92faa28b",
+      "instructions_sha256": "249b50fe553c9fe9fbaddbc306464f60a94193202982f24c33bbae4d25ca82d1",
+      "resolved_subrecipes": [],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/subrecipes/t4h-test.yaml",
+      "prompt_sha256": "42bdaf8c04eedfe1d1abe7dcef9812fe0c95072c12df600fba5270e907e32a5b",
+      "instructions_sha256": "c2d3c7920974a86d7e7593b25ef111c373e81d2aed68f5b268eb7fcda452bd65",
+      "resolved_subrecipes": [],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/tasks/t4h-task.yaml",
+      "prompt_sha256": "03e1a308e60e322604b544df976242fecd76bbb8247c627491ae2096907a6d93",
+      "instructions_sha256": "abe7c0b7bc462d50976f6fbba9a5b3f27660991866452b56c594c305898efd41",
+      "resolved_subrecipes": [],
+      "status": "PASS"
+    },
+    {
+      "recipe": "recipes/workers/t4h-worker.yaml",
+      "prompt_sha256": "201f373885232c380e6c256b00ba30cfe6f3e7879003f6ad053ce320f623b914",
+      "instructions_sha256": "eff72852490989c54c7b11f4bc4083195212e2710f9db8bb7c17ff2098689ecb",
+      "resolved_subrecipes": [],
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "verification_status": "PASS",
+  "redactions": [
+    "parameter values replaced with deterministic validation placeholders",
+    "no credentials recorded"
+  ],
+  "result_digest": "sha256:08cb5e2fd2f65914afd1d3bec5cb0c21ae83ada32fcd311ffe09043e3efb72e7"
+}

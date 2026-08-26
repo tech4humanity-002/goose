@@ -1,24 +1,31 @@
-# T4H Goose Recipe Catalogue
+# T4H Goose Recipe Catalogue — v1.2.0
 
-Canonical human-readable summary. Machine-readable metadata lives in `registry/recipe-index.yaml`.
+Machine-readable metadata lives in `registry/recipe-index.yaml`. Every recipe is version-aligned, indexed and covered by deterministic local contract execution.
 
-| Recipe | What it does | Resources | Expected outputs | Known limitations | Review |
-|---|---|---|---|---|---|
-| `t4h-start` | Orients Goose and reports actual readiness | Workspace, config, bad-mcp if configured | Readiness, blockers, warnings | Callable bad-mcp tools are not proof of grants | 2026-09-25 |
-| `t4h-build-and-verify` | Inspect → build → test → proof | Filesystem, Git, developer, tests | Changed files, test results, proof | External actions require approval; live tools may vary | 2026-09-25 |
-| `t4h-change-and-proof` | Govern a generic change and prove it | Workspace, Git, action tools | Change result + proof | Cannot prove unavailable systems | 2026-09-25 |
-| `t4h-job` | Run/inspect asynchronous job lifecycle | bad-mcp job tools | Job ID, status, result, verification | Cancellation/progress not proven | 2026-09-25 |
-| `t4h-task` | Create → claim → execute → complete | bad-mcp task tools | Task ID, owner, completion | Failure/retry/dependency not exposed | 2026-09-25 |
-| `t4h-agent-team` | Delegate and reconcile specialist agents | Summon + bad-mcp agents | Agent IDs, messages, consensus | Termination/budget need validation | 2026-09-25 |
-| `t4h-worker` | Govern scheduled/background work | bad-mcp worker tools | Worker/schedule state | Cancellation/heartbeat not proven | 2026-09-25 |
-| `t4h-proof` | Verify actual outcome | Proof tools | PASS/WARN/BLOCKED/UNPROVEN | Depends on available evidence | 2026-09-25 |
-| `t4h-release` | Build → approval → proof release | Build/proof + deployment tools | Release result + proof | Deployment requires approval | 2026-09-25 |
-| `t4h-recipe-review-worker` | Review due recipes and validate subrecipes | Goose CLI, registry, filesystem, worker plane | Review report, overdue list | Does not silently change recipes | 2026-09-25 |
+| Recipe | Function | Runtime integrity enhancement |
+|---|---|---|
+| `t4h-start` | Orient and report readiness | Structured readiness state |
+| `t4h-change-and-proof` | Govern a generic change | Idempotency, timeout, retry and rollback |
+| `t4h-release` | Build, release and prove | Replay suppression and recovery target |
+| `t4h-lock` | Protect shared mutable state | Ownership, lease, release and quarantine |
+| `t4h-rollback` | Restore trusted state | Evidence preservation and recovery proof |
+| `t4h-build-and-verify` | Inspect, implement, test and prove | Fully mapped subrecipe parameters |
+| `t4h-job` | Govern asynchronous execution | Bounded polling, timeout and recovery |
+| `t4h-task` | Govern bounded owned work | Verify-before-complete and failure receipt |
+| `t4h-agent-team` | Delegate specialist work | Duplicate suppression, budget and reaping contract |
+| `t4h-worker` | Govern background work | Lease, heartbeat and stale-worker recovery |
+| `t4h-proof` | Verify actual outcome | Structured evidence state |
+| `t4h-recipe-review-worker` | Review recipe integrity | Registry and subrecipe validation |
+| `t4h-inspect` | Reusable inspection | Required `objective` contract |
+| `t4h-test` | Reusable verification | Required `objective` contract |
+| `t4h-proof-check` | Reusable final proof | Required `outcome` contract |
 
-## Composition
+## Result and receipt contract
 
-`sub_recipes` are used for reusable stages. Goose's CLI supports subrecipes and the CLI can retrieve complete GitHub recipe directories, including referenced subrecipes. Desktop web-registry deeplinks have historically had a separate subrecipe-import limitation, so T4H uses the CLI/Git path as the canonical bulk installation route.
+Mutating and asynchronous recipes derive or record an idempotency key, use bounded retry and timeout rules, preserve attempt evidence, identify recovery behaviour and emit outputs compatible with `schemas/result.schema.json` and `schemas/receipt.schema.json`.
 
-## Review policy
+## Validation
 
-Every recipe carries a `review_due` date. The review worker identifies due/overdue recipes, validates them and reports findings. It must not extend a review date simply to clear an overdue state.
+`python3 scripts/validate_runtime_integrity.py` reconciles all 15 recipes across the filesystem, catalogue and index; checks versions and placeholders; resolves every subrecipe parameter binding; and performs deterministic local dry-run execution. This does not replace live Goose and bad-mcp verification.
+
+Every recipe remains due for review on 2026-09-25. Review dates must not be silently extended.

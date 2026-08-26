@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "1.2.0"
 title: "T4H Test and Verify"
 description: "Run the narrowest relevant tests and report concrete evidence."
 parameters:

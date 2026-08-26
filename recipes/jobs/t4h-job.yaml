@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "1.2.0"
 title: "T4H Job Lifecycle"
 description: "Execute or inspect an asynchronous T4H job using create, status and result semantics."
 parameters:
@@ -6,8 +6,17 @@ parameters:
     input_type: string
     requirement: required
     description: "Description of the asynchronous job to perform."
+  - key: idempotency_key
+    input_type: string
+    requirement: optional
+    description: "Stable key preventing duplicate job creation."
 instructions: |
-  Use the T4H job lifecycle for: {{ job_request }}. 1. Define the job precisely. 2. Create the job using the live T4H job capability if available. 3. Record job_id. 4. Monitor status until terminal state or explicit blocked condition. 5. Retrieve result. 6. Verify result before claiming completion. If unavailable, report UNPROVEN/BLOCKED; do not simulate success.
+  Use the T4H job lifecycle for: {{ job_request }}. 1. Define the job precisely and derive or record an idempotency key. 2. Check prior receipts before creating a job. 3. Create only when no completed or active equivalent exists. 4. Record job_id. 5. Poll with bounded backoff until terminal state, timeout or explicit blocked condition. 6. Retrieve and verify the result. 7. On timeout attempt safe cancellation when available and record the recovery owner. If unavailable, report UNPROVEN/BLOCKED; do not simulate success. Emit the structured result and receipt contracts.
 prompt: "Run the T4H job lifecycle for {{ job_request }}."
 settings:
   max_turns: 75
+retry:
+  max_retries: 2
+  timeout_seconds: 900
+  backoff_seconds: [5, 15, 30]
+  recovery: cancel_or_quarantine

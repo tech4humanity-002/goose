@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "1.2.0"
 title: "T4H Proof and Verification"
 description: "Verify that a requested T4H outcome actually occurred and report proof state."
 parameters:

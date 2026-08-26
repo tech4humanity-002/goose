@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "1.2.0"
 title: "T4H Inspect Workspace"
 description: "Inspect the current workspace and identify relevant files, state and available verification paths."
 parameters:

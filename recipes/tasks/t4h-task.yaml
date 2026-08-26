@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "1.2.0"
 title: "T4H Task Lifecycle"
 description: "Create, claim and complete a bounded T4H task with ownership and verification."
 parameters:
@@ -6,8 +6,17 @@ parameters:
     input_type: string
     requirement: required
     description: "Bounded task to execute."
+  - key: idempotency_key
+    input_type: string
+    requirement: optional
+    description: "Stable key preventing duplicate task execution."
 instructions: |
-  Execute the bounded task: {{ task_request }}. Use CREATE → CLAIM → EXECUTE → COMPLETE. Record task identifier and owner. Do not claim completion without checking actual result. If failure/retry/dependency semantics are required but not exposed, mark the gap explicitly.
+  Execute the bounded task: {{ task_request }}. Derive or record an idempotency key and check prior receipts. Use CREATE → CLAIM → EXECUTE → VERIFY → COMPLETE. Record task identifier and owner. Renew ownership only while progress is observable. Retry transient failures within the declared budget. On exhaustion record FAILED or BLOCKED, recovery owner and next executable action. Do not claim completion without checking actual result. Emit the structured result and receipt contracts.
 prompt: "Execute the T4H task lifecycle for {{ task_request }}."
 settings:
   max_turns: 75
+retry:
+  max_retries: 2
+  timeout_seconds: 600
+  backoff_seconds: [2, 10]
+  recovery: release_claim_and_record_failure

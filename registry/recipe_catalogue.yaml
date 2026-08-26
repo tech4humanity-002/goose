@@ -1,8 +1,10 @@
-version: 1
+version: "1.2.0"
 recipes:
   - core/t4h-start.yaml
   - core/t4h-change-and-proof.yaml
   - core/t4h-release.yaml
+  - core/t4h-lock.yaml
+  - core/t4h-rollback.yaml
   - development/t4h-build-and-verify.yaml
   - jobs/t4h-job.yaml
   - tasks/t4h-task.yaml

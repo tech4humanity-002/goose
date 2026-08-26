@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "1.2.0"
 registry: t4h-goose-recipes
 review_policy:
   default_review_interval_days: 30
@@ -6,84 +6,18 @@ review_policy:
   reviewer_worker: t4h-recipe-review-worker
   no_silent_date_extension: true
 recipes:
-  - id: t4h-start
-    path: recipes/core/t4h-start.yaml
-    version: 1.0.0
-    category: core
-    purpose: "Orient Goose and report actual readiness."
-    resources: [workspace, goose-config, bad-mcp-if-configured]
-    outputs: [readiness-status, blockers, warnings]
-    limitations: ["bad-mcp callable visibility is not proof of authorisation while scope registry is PARTIAL"]
-    review_due: 2026-09-25
-  - id: t4h-build-and-verify
-    path: recipes/development/t4h-build-and-verify.yaml
-    version: 1.1.0
-    category: development
-    purpose: "Implement and verify a development request."
-    resources: [filesystem, git, developer, tests]
-    outputs: [changed-files, test-results, proof-status]
-    limitations: ["External changes remain subject to approval and live tool availability"]
-    review_due: 2026-09-25
-  - id: t4h-change-and-proof
-    path: recipes/core/t4h-change-and-proof.yaml
-    version: 1.0.0
-    category: core
-    purpose: "Govern a change from inspection through proof."
-    resources: [workspace, git, available-action-tools]
-    outputs: [change-result, proof-status]
-    limitations: ["Cannot prove unavailable external systems"]
-    review_due: 2026-09-25
-  - id: t4h-job
-    path: recipes/jobs/t4h-job.yaml
-    version: 1.0.0
-    category: jobs
-    purpose: "Create, monitor and retrieve an asynchronous T4H job."
-    resources: [bad-mcp-job-tools]
-    outputs: [job-id, terminal-status, result, verification]
-    limitations: ["Requires live job tools; cancellation/progress semantics are not currently proven"]
-    review_due: 2026-09-25
-  - id: t4h-task
-    path: recipes/tasks/t4h-task.yaml
-    version: 1.0.0
-    category: tasks
-    purpose: "Create, claim and complete a bounded task."
-    resources: [bad-mcp-task-tools]
-    outputs: [task-id, owner, completion-status]
-    limitations: ["Failure/retry/dependency semantics are not currently exposed in the supplied inventory"]
-    review_due: 2026-09-25
-  - id: t4h-agent-team
-    path: recipes/agents/t4h-agent-team.yaml
-    version: 1.0.0
-    category: agents
-    purpose: "Delegate bounded work to specialist agents and reconcile results."
-    resources: [summon, bad-mcp-agent-tools-if-configured]
-    outputs: [agent-ids, messages, consensus, proof]
-    limitations: ["Agent termination and budget semantics require live validation"]
-    review_due: 2026-09-25
-  - id: t4h-worker
-    path: recipes/workers/t4h-worker.yaml
-    version: 1.0.0
-    category: workers
-    purpose: "Inspect and govern scheduled/background execution."
-    resources: [bad-mcp-worker-tools]
-    outputs: [worker-status, schedule-id, trigger-result]
-    limitations: ["Cancellation and heartbeat semantics are not currently proven"]
-    review_due: 2026-09-25
-  - id: t4h-proof
-    path: recipes/evidence/t4h-proof.yaml
-    version: 1.0.0
-    category: evidence
-    purpose: "Verify an outcome and distinguish execution evidence from authorisation evidence."
-    resources: [proof-tools-if-configured]
-    outputs: [proof-status, evidence-list]
-    limitations: ["Proof quality depends on live evidence tools"]
-    review_due: 2026-09-25
-  - id: t4h-recipe-review-worker
-    path: recipes/review/t4h-recipe-review-worker.yaml
-    version: 1.0.0
-    category: governance
-    purpose: "Review due/overdue recipes and validate subrecipe references."
-    resources: [filesystem, goose-cli, recipe-registry, worker-plane-if-configured]
-    outputs: [review-report, overdue-list, validation-results]
-    limitations: ["Does not silently modify production recipes"]
-    review_due: 2026-09-25
+  - {id: t4h-start, path: recipes/core/t4h-start.yaml, version: 1.2.0, category: core, purpose: "Orient Goose and report actual readiness.", resources: [workspace, goose-config, bad-mcp-if-configured], outputs: [readiness-status, blockers, warnings, structured-result], limitations: ["Live bad-mcp authority requires runtime verification"], review_due: 2026-09-25}
+  - {id: t4h-build-and-verify, path: recipes/development/t4h-build-and-verify.yaml, version: 1.2.0, category: development, purpose: "Implement, test and prove a development request.", resources: [filesystem, git, developer, tests], outputs: [changed-files, test-results, proof-status, structured-result, receipt], limitations: ["External changes require approval and live tools"], review_due: 2026-09-25}
+  - {id: t4h-change-and-proof, path: recipes/core/t4h-change-and-proof.yaml, version: 1.2.0, category: core, purpose: "Govern a change from inspection through proof and recovery.", resources: [workspace, git, available-action-tools], outputs: [change-result, proof-status, structured-result, receipt], limitations: ["Cannot prove unavailable external systems"], review_due: 2026-09-25}
+  - {id: t4h-release, path: recipes/core/t4h-release.yaml, version: 1.2.0, category: core, purpose: "Build, approve, release, prove and recover when required.", resources: [build, deployment, proof, rollback], outputs: [release-result, proof-status, structured-result, receipt], limitations: ["Deployment requires approval and a live deployment tool"], review_due: 2026-09-25}
+  - {id: t4h-lock, path: recipes/core/t4h-lock.yaml, version: 1.2.0, category: core, purpose: "Protect shared mutable state with a bounded lock lifecycle.", resources: [bad-mcp-lock-tools], outputs: [lock-id, ownership-status, structured-result, receipt], limitations: ["Lease renewal and stale-lock recovery require live validation"], review_due: 2026-09-25}
+  - {id: t4h-rollback, path: recipes/core/t4h-rollback.yaml, version: 1.2.0, category: recovery, purpose: "Restore and prove a trusted pre-change state.", resources: [workspace, snapshots, deployment, proof], outputs: [recovery-status, proof-status, structured-result, receipt], limitations: ["External rollback requires approval and a valid target"], review_due: 2026-09-25}
+  - {id: t4h-job, path: recipes/jobs/t4h-job.yaml, version: 1.2.0, category: jobs, purpose: "Create, monitor, retrieve and recover an asynchronous job.", resources: [bad-mcp-job-tools], outputs: [job-id, terminal-status, result, structured-result, receipt], limitations: ["Cancellation and progress require live validation"], review_due: 2026-09-25}
+  - {id: t4h-task, path: recipes/tasks/t4h-task.yaml, version: 1.2.0, category: tasks, purpose: "Create, claim, execute, verify and complete a bounded task.", resources: [bad-mcp-task-tools], outputs: [task-id, owner, completion-status, structured-result, receipt], limitations: ["Failure and dependency semantics require live validation"], review_due: 2026-09-25}
+  - {id: t4h-agent-team, path: recipes/agents/t4h-agent-team.yaml, version: 1.2.0, category: agents, purpose: "Delegate bounded work and reconcile specialist results.", resources: [summon, bad-mcp-agent-tools-if-configured], outputs: [agent-ids, consensus, proof, structured-result, receipt], limitations: ["Termination and budget require live validation"], review_due: 2026-09-25}
+  - {id: t4h-worker, path: recipes/workers/t4h-worker.yaml, version: 1.2.0, category: workers, purpose: "Inspect and govern scheduled or background execution.", resources: [bad-mcp-worker-tools], outputs: [worker-status, schedule-id, structured-result, receipt], limitations: ["Cancellation and heartbeat require live validation"], review_due: 2026-09-25}
+  - {id: t4h-proof, path: recipes/evidence/t4h-proof.yaml, version: 1.2.0, category: evidence, purpose: "Verify an outcome and distinguish execution from authority evidence.", resources: [proof-tools-if-configured], outputs: [proof-status, evidence-list, structured-result], limitations: ["Proof quality depends on live evidence tools"], review_due: 2026-09-25}
+  - {id: t4h-recipe-review-worker, path: recipes/review/t4h-recipe-review-worker.yaml, version: 1.2.0, category: governance, purpose: "Review due recipes and validate registry integrity.", resources: [filesystem, goose-cli, recipe-registry], outputs: [review-report, overdue-list, validation-results, structured-result], limitations: ["Does not silently modify production recipes"], review_due: 2026-09-25}
+  - {id: t4h-inspect, path: recipes/subrecipes/t4h-inspect.yaml, version: 1.2.0, category: subrecipe, purpose: "Inspect workspace state without mutation.", resources: [workspace, filesystem, git], outputs: [inspection-result, structured-result], limitations: ["Visibility depends on available read tools"], review_due: 2026-09-25}
+  - {id: t4h-test, path: recipes/subrecipes/t4h-test.yaml, version: 1.2.0, category: subrecipe, purpose: "Run bounded tests and report evidence.", resources: [test-tools], outputs: [test-results, structured-result], limitations: ["Coverage depends on available tests"], review_due: 2026-09-25}
+  - {id: t4h-proof-check, path: recipes/subrecipes/t4h-proof-check.yaml, version: 1.2.0, category: subrecipe, purpose: "Perform final proof before completion.", resources: [proof-tools-if-configured], outputs: [proof-status, structured-result], limitations: ["External proof depends on live evidence tools"], review_due: 2026-09-25}

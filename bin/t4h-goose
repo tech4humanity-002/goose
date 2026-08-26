@@ -3,7 +3,10 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 if [[ -n "${GOOSE_RECIPE_PATH:-}" ]]; then export GOOSE_RECIPE_PATH="$ROOT/recipes:$GOOSE_RECIPE_PATH"; else export GOOSE_RECIPE_PATH="$ROOT/recipes"; fi
 ARGS=()
-if [[ -n "${T4H_BAD_MCP_URI:-}" ]]; then
+if [[ -n "${T4H_BAD_MCP_URI:-}" && -n "${T4H_BAD_MCP_CMD:-}" ]]; then
+  echo "Set only one of T4H_BAD_MCP_URI or T4H_BAD_MCP_CMD." >&2
+  exit 64
+elif [[ -n "${T4H_BAD_MCP_URI:-}" ]]; then
   ARGS+=(--with-streamable-http-extension "$T4H_BAD_MCP_URI")
 elif [[ -n "${T4H_BAD_MCP_CMD:-}" ]]; then
   ARGS+=(--with-extension "$T4H_BAD_MCP_CMD")

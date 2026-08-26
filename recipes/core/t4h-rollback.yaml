@@ -1,0 +1,37 @@
+version: "1.2.0"
+title: "T4H Rollback and Recovery"
+description: "Restore a proven pre-change state and verify recovery without erasing evidence."
+parameters:
+  - key: failed_change
+    input_type: string
+    requirement: required
+    description: "Failed or unsafe change requiring recovery."
+  - key: recovery_target
+    input_type: string
+    requirement: required
+    description: "Proven revision, snapshot or state to restore."
+  - key: idempotency_key
+    input_type: string
+    requirement: optional
+    description: "Stable rollback replay-protection key."
+sub_recipes:
+  - name: inspect
+    path: "../subrecipes/t4h-inspect.yaml"
+    description: "Confirm the failure and recovery target before mutation."
+    values:
+      objective: "Rollback {{ failed_change }} to {{ recovery_target }}"
+  - name: proof
+    path: "../subrecipes/t4h-proof-check.yaml"
+    description: "Verify the restored state."
+    values:
+      outcome: "Recovered {{ failed_change }} to {{ recovery_target }}"
+instructions: |
+  Recover from {{ failed_change }} by restoring {{ recovery_target }}. Verify that the target exists and is trusted. Record or derive an idempotency key and check for a prior successful rollback. Require approval when recovery has external, destructive or infrastructure effects. Preserve failure evidence. Apply the narrowest reversible recovery, verify service and data state, and emit structured result and receipt records. If recovery cannot be proven, quarantine the affected resource and return BLOCKED with a named owner and next action.
+prompt: "Rollback {{ failed_change }} to {{ recovery_target }} and prove recovery."
+settings:
+  max_turns: 100
+retry:
+  max_retries: 1
+  timeout_seconds: 900
+  backoff_seconds: [10]
+  recovery: quarantine_and_escalate
