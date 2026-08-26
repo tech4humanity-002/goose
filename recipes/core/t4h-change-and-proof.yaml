@@ -1,0 +1,21 @@
+version: "1.0.0"
+title: "T4H Change and Proof"
+description: "Generic governed workflow for making a change and proving the resulting outcome."
+parameters:
+  - key: request
+    input_type: string
+    requirement: required
+    description: "Requested change."
+sub_recipes:
+  - name: inspect
+    path: "../subrecipes/t4h-inspect.yaml"
+    description: "Inspect before mutation."
+  - name: proof
+    path: "../subrecipes/t4h-proof-check.yaml"
+    description: "Verify the final outcome."
+instructions: |
+  Execute the requested change: {{ request }}.
+  Inspect first. Make only necessary changes. Verify after mutation. Require approval for external, infrastructure, destructive, secret, deployment or financial effects. Finish only with evidence.
+prompt: "Execute and prove: {{ request }}"
+settings:
+  max_turns: 100

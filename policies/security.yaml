@@ -1,0 +1,2 @@
+version: 1
+rules: [never_put_secrets_in_recipe_yaml, never_commit_credentials, require_approval_for_high_impact_mutation, restrict_filesystem_to_required_workspace, prefer_read_before_write, verify_external_side_effects, stop_on_ambiguous_authorisation]

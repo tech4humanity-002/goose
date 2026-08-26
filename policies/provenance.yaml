@@ -1,0 +1,6 @@
+version: 1
+required_fields: [action, actor, timestamp, tool, correlation_id, result, verification_status]
+rules:
+  - "Do not report callable as authorised without authoritative scope evidence."
+  - "Do not report intended state as achieved state."
+  - "Retain job/task/agent/worker identifiers when present."

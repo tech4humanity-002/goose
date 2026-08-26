@@ -1,0 +1,40 @@
+# T4H Goose configuration example.
+# Canonical macOS Goose config: ~/.config/goose/config.yaml
+# Use `goose configure` for provider credentials.
+active_provider: anthropic
+providers:
+  anthropic:
+    enabled: true
+    model: claude-sonnet-4-5-20250929
+    configured: false
+GOOSE_TEMPERATURE: 0.2
+GOOSE_MODE: smart_approve
+GOOSE_TOOLSHIM: true
+GOOSE_CLI_MIN_PRIORITY: 0.2
+# Set after the canonical T4H recipe repository exists.
+# GOOSE_RECIPE_GITHUB_REPO: TML-4PM/T4H-goose-recipes
+SECURITY_PROMPT_ENABLED: true
+GOOSE_SEARCH_PATHS:
+  - /opt/homebrew/bin
+  - /usr/local/bin
+  - ~/bin
+extensions:
+  developer:
+    bundled: true
+    enabled: true
+    name: developer
+    timeout: 300
+    type: builtin
+  memory:
+    bundled: true
+    enabled: true
+    name: memory
+    timeout: 300
+    type: builtin
+  bad-mcp:
+    enabled: false
+    bundled: false
+    name: bad-mcp
+    timeout: 300
+    type: streamable_http
+    # uri: REQUIRED_FROM_LIVE_BAD_MCP_INSTALLATION

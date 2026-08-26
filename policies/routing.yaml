@@ -1,0 +1,10 @@
+version: 1
+primary_action_plane: bad-mcp
+routes:
+  local_development: [developer, filesystem, git]
+  t4h_orchestration: [agents, tasks, jobs, workers, locks]
+  source_control: [git_github]
+  infrastructure: [aws, docker, deployment]
+  evidence: [google_drive, filesystem, proof]
+  knowledge: [memory]
+  verification: [proof]

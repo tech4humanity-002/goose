@@ -1,0 +1,20 @@
+version: 1
+lifecycles:
+  task: [CREATE, CLAIM, EXECUTE, COMPLETE]
+  job: [CREATE, RUN, STATUS, RESULT]
+  worker: [DISCOVER, SCHEDULE, TRIGGER, RUN, STATUS]
+  agent: [DISCOVER, SPAWN, MESSAGE, COLLABORATE, CONSENSUS, TERMINATE]
+  lock: [ACQUIRE, HOLD, RELEASE]
+  proof: [CHECK, VERIFY, RECORD]
+known_gaps:
+  - task failure state
+  - task retry/idempotency
+  - task dependency model
+  - job cancellation
+  - job progress/heartbeat
+  - worker cancellation
+  - worker heartbeat/lease
+  - agent termination/reaping
+  - agent timeout/budget
+  - stale lock recovery
+  - authoritative scope registry
