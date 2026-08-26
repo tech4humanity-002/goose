@@ -1,9 +1,9 @@
-<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-worker.yaml | Source SHA-256: 17a37057ddf4c2195a24560d06f98f077c345de2101a4808d5334ba7a48a2ba4 | -->
+<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-worker.yaml | Source SHA-256: 7e483ee956f7c6efb3c053d3bd179b3f9ca99fca13556b935a2b80b2b6a8f2dd | -->
 # T4H Worker Lifecycle
 
 Platform: `gemini-cli`  
 Canonical workflow: `t4h-worker`  
-Contract version: `1.3.0`
+Contract version: `1.4.0`
 
 ## Parameters
 

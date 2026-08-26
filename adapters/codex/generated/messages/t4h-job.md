@@ -1,9 +1,9 @@
-<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-job.yaml | Source SHA-256: fea1d5abbd025b470f53a3e9bd7137d5bfd185cf9e87e813d39c8348d44da719 | -->
+<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-job.yaml | Source SHA-256: cae1b04ccc3e3f2522cf384926586981126efc7f1861cfacc284ad230c40bc8e | -->
 # T4H Job Lifecycle
 
 Platform: `codex`  
 Canonical workflow: `t4h-job`  
-Contract version: `1.3.0`
+Contract version: `1.4.0`
 
 ## Parameters
 

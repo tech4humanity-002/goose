@@ -29,7 +29,7 @@ python3 conformance/validate_contract.py
 python3 -m unittest discover -s tests -v
 ```
 
-The compiler currently produces 80 deterministic files: 15 workflows across five adapters plus one manifest per adapter.
+The compiler currently produces 90 deterministic files: 16 workflows and one Gemini platform profile across five adapters, plus one manifest per adapter.
 
 ## Adapter entrypoints
 
@@ -51,6 +51,13 @@ Remove `--dry-run` only when the selected runtime is installed and authorised. A
 - Idempotency, retry, timeout, recovery and quarantine
 - Structured result and receipt schemas
 - Capability requirements and declared platform gaps
+- Replaceable model-platform profiles with mutable-fact review dates
 - Deterministic compilation and conformance validation
 
 Historical v1.2.0 Goose validation evidence remains in `receipts/`; it is evidence, not current source.
+
+## Gemini
+
+Gemini is a platform profile, not a fork of the operating contract. Use `t4h-model-inference` with
+`platform_profile=gemini`. The generated profile uses the current `google-genai` SDK, keeps model selection configurable,
+requires current model/quota/pricing lookup before use, and leaves Drive access and authority with the owning worker.

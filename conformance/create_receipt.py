@@ -46,12 +46,12 @@ def main():
     status = "PASS" if all(check["exit_code"] == 0 for check in checks) else "BLOCKED"
     timestamp = args.timestamp or dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     receipt = {
-        "schema_version": "1.3.0",
+        "schema_version": "1.4.0",
         "receipt_type": "contract-adapter-conformance",
         "timestamp": timestamp,
         "status": status,
-        "contract": {"workflows": 15, "files": contract_files, "digest": contract_digest},
-        "adapters": {"count": 5, "generated_files": 80, "dry_runs": 75, "files": adapter_files, "digest": adapter_digest},
+        "contract": {"workflows": 16, "platform_profiles": 1, "files": contract_files, "digest": contract_digest},
+        "adapters": {"count": 5, "generated_files": 90, "dry_runs": 80, "files": adapter_files, "digest": adapter_digest},
         "checks": checks,
         "live_runtime_execution": "UNPROVEN_NOT_REQUESTED",
         "redactions": ["no credentials captured", "command output represented only by SHA-256 digests"],

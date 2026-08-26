@@ -1,9 +1,9 @@
-<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-agent-team.yaml | Source SHA-256: 03c4b35c02f13420963871e744f297c462f7fe0ea4efafe1617e22f09476ad62 | -->
+<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-agent-team.yaml | Source SHA-256: 73d970e6f350e6f16505dbe05dba0c99f80814355b9c94f41e05b889fd9f8dd6 | -->
 # T4H Agent Team
 
 Platform: `claude-code`  
 Canonical workflow: `t4h-agent-team`  
-Contract version: `1.3.0`
+Contract version: `1.4.0`
 
 ## Parameters
 

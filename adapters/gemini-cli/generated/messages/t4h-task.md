@@ -1,9 +1,9 @@
-<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-task.yaml | Source SHA-256: 258b3e8e0a971b03a4922a2ced094e9303f1442dca9acf925ff1305996fb0c02 | -->
+<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-task.yaml | Source SHA-256: a2c1902bf126c0d7ef534fb4895b8ac69e9ff3465f69dbb371eb7ec909049865 | -->
 # T4H Task Lifecycle
 
 Platform: `gemini-cli`  
 Canonical workflow: `t4h-task`  
-Contract version: `1.3.0`
+Contract version: `1.4.0`
 
 ## Parameters
 

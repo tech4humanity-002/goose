@@ -1,5 +1,5 @@
 adapter: aider
-contract_version: "1.3.0"
+contract_version: "1.4.0"
 runtime_command: aider
 entrypoint: adapters/aider/bin/t4h-aider
 native_features: [git, repository-map, architect-mode, lint, test, message-file]

@@ -29,6 +29,13 @@ def load_workflows():
     return rows
 
 
+def load_profiles():
+    rows = []
+    for path in sorted((ROOT / "contract/platforms").glob("*.yaml")):
+        rows.append((path, yaml.safe_load(path.read_text(encoding="utf-8"))))
+    return rows
+
+
 def prompt_markdown(platform: str, source: Path, workflow: dict) -> str:
     relative = str(source.relative_to(ROOT))
     header = generated_header(relative, digest(source))
@@ -93,15 +100,59 @@ def goose_recipe(source: Path, workflow: dict) -> str:
     return "".join(f"# {line}\n" for line in header.rstrip().splitlines()) + yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=120)
 
 
+def profile_markdown(platform: str, source: Path, profile: dict) -> str:
+    relative = str(source.relative_to(ROOT))
+    header = generated_header(relative, digest(source))
+    capabilities = "\n".join(f"- `{name}`: {binding}" for name, binding in profile["capability_bindings"].items())
+    boundaries = "\n".join(f"- {rule}" for rule in profile["boundaries"])
+    sources = "\n".join(f"- `{name}`: {url}" for name, url in profile["mutable_facts"]["sources"].items())
+    legacy = ", ".join(f"`{name}`" for name in profile["sdk"]["legacy_packages"]) or "None"
+    return f"""<!-- {header.replace(chr(10), ' | ').strip()} -->
+# {profile['provider']} {profile['id']} platform profile
+
+Adapter target: `{platform}`
+
+Contract version: `{profile['contract_version']}`
+
+{profile['role']}
+
+## SDK and authentication
+
+- Python package: `{profile['sdk']['python_package']}` ({profile['sdk']['version_policy']})
+- Legacy packages prohibited for new work: {legacy}
+- Credential variable: `{profile['authentication']['environment_variable']}`
+
+## Capability bindings
+
+{capabilities}
+
+## Runtime boundaries
+
+{boundaries}
+
+## Mutable provider facts
+
+Checked: `{profile['mutable_facts']['checked_at']}`
+
+Review due: `{profile['mutable_facts']['review_due']}`
+
+Refresh before use: `{str(profile['mutable_facts']['refresh_before_use']).lower()}`
+
+{sources}
+"""
+
+
 def expected_files():
     workflows = load_workflows()
+    profiles = load_profiles()
+    contract_version = yaml.safe_load((ROOT / "contract/manifest.yaml").read_text(encoding="utf-8"))["contract_version"]
     expected = {}
     for platform in PLATFORMS:
         adapter = yaml.safe_load((ROOT / "adapters" / platform / "adapter.yaml").read_text(encoding="utf-8"))
         manifest = {
             "generated": True,
             "adapter": platform,
-            "contract_version": "1.3.0",
+            "contract_version": contract_version,
             "workflow_count": len(workflows),
             "workflows": [row[1]["id"] for row in workflows],
             "unsupported_capabilities": adapter.get("unsupported_capabilities", []),
@@ -114,6 +165,9 @@ def expected_files():
             else:
                 key = f"adapters/{platform}/generated/messages/{workflow['id']}.md"
                 expected[key] = prompt_markdown(platform, source, workflow)
+        for source, profile in profiles:
+            key = f"adapters/{platform}/generated/profiles/{profile['id']}.md"
+            expected[key] = profile_markdown(platform, source, profile)
     return expected
 
 
@@ -142,7 +196,7 @@ def main():
         if failures:
             print(json.dumps({"status": "DRIFT", "files": sorted(set(failures))}, indent=2))
             return 1
-        print(json.dumps({"status": "PASS", "generated_files": len(expected), "workflows": 15}, indent=2))
+        print(json.dumps({"status": "PASS", "generated_files": len(expected), "workflows": len(load_workflows()), "profiles": len(load_profiles())}, indent=2))
     return 0
 
 

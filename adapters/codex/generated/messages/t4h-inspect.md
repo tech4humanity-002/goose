@@ -1,9 +1,9 @@
-<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-inspect.yaml | Source SHA-256: c9d381bc4b052127cc566da1cc3a9f6cc13e0b399dcdb57db56e72efb987b255 | -->
+<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-inspect.yaml | Source SHA-256: 2f0c320806500cb1c833a0bce4dd6e8997a702b974f8904bb4f7cd4058429af7 | -->
 # T4H Inspect Workspace
 
 Platform: `codex`  
 Canonical workflow: `t4h-inspect`  
-Contract version: `1.3.0`
+Contract version: `1.4.0`
 
 ## Parameters
 

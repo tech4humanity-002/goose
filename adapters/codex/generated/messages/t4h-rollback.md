@@ -1,9 +1,9 @@
-<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-rollback.yaml | Source SHA-256: 66195699af4e224f8797e9f509056af909a82c675c9f7c06b7b1d619ed261d83 | -->
+<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-rollback.yaml | Source SHA-256: 3e2dc8651b50603c0eb4671a5796ca36345ab76bf20cfc2d227d25883cc83668 | -->
 # T4H Rollback and Recovery
 
 Platform: `codex`  
 Canonical workflow: `t4h-rollback`  
-Contract version: `1.3.0`
+Contract version: `1.4.0`
 
 ## Parameters
 

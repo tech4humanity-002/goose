@@ -1,9 +1,9 @@
-<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-release.yaml | Source SHA-256: d78eb13b163353e3a1a99c33ff4b4d81befa0f6240583e7b4efa081673f2032e | -->
+<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-release.yaml | Source SHA-256: f68b0a1563bd709a6786f0e07bba1f3b9d3be72d9902cee3c8d84e6e01b64e1c | -->
 # T4H Release
 
 Platform: `aider`  
 Canonical workflow: `t4h-release`  
-Contract version: `1.3.0`
+Contract version: `1.4.0`
 
 ## Parameters
 

@@ -1,9 +1,9 @@
-<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-proof.yaml | Source SHA-256: 11cdec956f8830b5ff3dd6937166052640ac3aebcb1d98431970927716227d3b | -->
+<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-proof.yaml | Source SHA-256: 3bd5177842c516d6eb66593b40d704fd0cf855a41ae1039b63649907f01dd692 | -->
 # T4H Proof and Verification
 
 Platform: `gemini-cli`  
 Canonical workflow: `t4h-proof`  
-Contract version: `1.3.0`
+Contract version: `1.4.0`
 
 ## Parameters
 

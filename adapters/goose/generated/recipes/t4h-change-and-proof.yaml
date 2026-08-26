@@ -1,7 +1,7 @@
 # GENERATED FILE — DO NOT EDIT
 # Source: contract/workflows/t4h-change-and-proof.yaml
-# Source SHA-256: 7557f777aef61f0df81055e667a8bbcfacf20c30d086be0ea1ae178323f55401
-version: 1.3.0
+# Source SHA-256: 30db6c8dea12b60055440599bcadf8b38386b84116d8c0b3b376e34e7b1c3f0a
+version: 1.4.0
 title: T4H Change and Proof
 description: Govern a change from inspection through proof and recovery.
 parameters:

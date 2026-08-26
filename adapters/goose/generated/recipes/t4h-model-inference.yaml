@@ -1,0 +1,69 @@
+# GENERATED FILE — DO NOT EDIT
+# Source: contract/workflows/t4h-model-inference.yaml
+# Source SHA-256: 0b9c442af3b3b1480dd81d0f5c372b3c89f89a6ba2032c217fca59436ce83a57
+version: 1.4.0
+title: T4H Governed Model Inference
+description: Execute bounded model inference without transferring operating authority to the provider.
+parameters:
+- key: request
+  input_type: string
+  requirement: required
+  description: Bounded inference objective and acceptance criteria.
+- key: platform_profile
+  input_type: string
+  requirement: required
+  description: Contract platform profile used to resolve the provider implementation.
+- key: input_manifest
+  input_type: string
+  requirement: required
+  description: Manifest of bounded inputs and their provenance; use none when the request is text-only.
+- key: output_schema
+  input_type: string
+  requirement: required
+  description: Schema identifier or explicit human-readable output contract.
+- key: idempotency_key
+  input_type: string
+  requirement: optional
+  description: Stable key preventing duplicate externally consequential inference.
+instructions: 'Execute {{ request }} using {{ platform_profile }} with inputs {{ input_manifest }} and output contract {{
+  output_schema }}.
+
+  Resolve the platform through contract/platforms and verify mutable provider facts before use. Validate data classification,
+
+  modality, provenance, file count, file size, context and output bounds before submission. Derive or record an idempotency
+  key
+
+  and check prior receipts. Treat model tool calls as proposals: route them through the contract allowlist, scope and approval
+
+  controls and record separate tool receipts. Apply bounded timeout and retry only transient failures. Validate the final
+  output
+
+  against the requested schema. Record provider, resolved model, latency, usage returned by the provider, retries, evidence,
+
+  redactions and terminal status. On exhausted retries, cancel or quarantine outstanding work and return BLOCKED or UNPROVEN;
+
+  never substitute an unverified model response for a proven result.
+
+  '
+prompt: Execute canonical workflow t4h-model-inference using its supplied parameters.
+settings:
+  max_turns: 75
+retry:
+  max_retries: 2
+  timeout_seconds: 300
+  backoff_seconds:
+  - 2
+  - 10
+  recovery: cancel_or_quarantine_inference
+sub_recipes:
+- name: t4h-inspect
+  path: ./t4h-inspect.yaml
+  description: Resolve current provider facts and validate bounded inputs before submission.
+  values:
+    objective: Validate profile {{ platform_profile }}, inputs {{ input_manifest }}, and output contract {{ output_schema
+      }} for {{ request }}
+- name: t4h-proof-check
+  path: ./t4h-proof-check.yaml
+  description: Validate output and receipt evidence before accepting the result.
+  values:
+    outcome: Schema-valid governed inference result for {{ request }}

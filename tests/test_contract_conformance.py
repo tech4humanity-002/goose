@@ -18,7 +18,8 @@ class ContractConformanceTest(unittest.TestCase):
         result = self.run_ok("python3", "conformance/validate_contract.py")
         data = json.loads(result.stdout)
         self.assertEqual("PASS", data["status"])
-        self.assertEqual(15, data["workflows"])
+        self.assertEqual(16, data["workflows"])
+        self.assertEqual(1, data["profiles"])
         self.assertEqual(5, data["adapters"])
 
     def test_compiler_is_deterministic_and_clean(self):
@@ -37,7 +38,7 @@ class ContractConformanceTest(unittest.TestCase):
 
     def test_every_workflow_dry_runs_on_every_adapter(self):
         workflows = sorted(path.stem for path in (ROOT / "contract/workflows").glob("*.yaml"))
-        self.assertEqual(15, len(workflows))
+        self.assertEqual(16, len(workflows))
         for workflow_id in workflows:
             workflow = yaml.safe_load((ROOT / "contract/workflows" / f"{workflow_id}.yaml").read_text())
             parameters = []
@@ -51,10 +52,28 @@ class ContractConformanceTest(unittest.TestCase):
     def test_platform_gaps_are_explicit(self):
         for adapter in ADAPTERS:
             declaration = yaml.safe_load((ROOT / "adapters" / adapter / "adapter.yaml").read_text())
-            self.assertEqual("1.3.0", declaration["contract_version"])
+            self.assertEqual("1.4.0", declaration["contract_version"])
             self.assertIn("native_features", declaration)
             self.assertIn("emulated_features", declaration)
             self.assertIn("unsupported_capabilities", declaration)
+
+    def test_gemini_profile_is_current_governed_and_generated_everywhere(self):
+        profile = yaml.safe_load((ROOT / "contract/platforms/gemini.yaml").read_text())
+        self.assertEqual("google-genai", profile["sdk"]["python_package"])
+        self.assertIn("google-generativeai", profile["sdk"]["legacy_packages"])
+        self.assertTrue(profile["mutable_facts"]["refresh_before_use"])
+        self.assertEqual("GEMINI_API_KEY", profile["authentication"]["environment_variable"])
+        for adapter in ADAPTERS:
+            generated = (ROOT / "adapters" / adapter / "generated/profiles/gemini.md").read_text()
+            self.assertIn("google-genai` (latest-compatible)", generated)
+            self.assertIn("never the operating system", generated)
+            self.assertIn("Refresh before use: `true`", generated)
+
+    def test_gemini_profile_rejects_stale_pack_claims(self):
+        canonical = "\n".join(path.read_text() for path in (ROOT / "contract").rglob("*") if path.is_file())
+        self.assertNotIn("gemini-1.5", canonical.lower())
+        self.assertNotRegex(canonical.lower(), r"60 requests per minute|2m tokens|8,?192 tokens")
+        self.assertNotRegex(canonical.lower(), r"\$[0-9]+(?:\.[0-9]+)?\s*/\s*(?:1m|million) tokens")
 
     def test_historical_receipt_does_not_define_current_contract(self):
         historical = json.loads((ROOT / "receipts/runtime-integrity-v1.2.0.json").read_text())

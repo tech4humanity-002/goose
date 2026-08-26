@@ -1,7 +1,7 @@
 # GENERATED FILE — DO NOT EDIT
 # Source: contract/workflows/t4h-start.yaml
-# Source SHA-256: acf1992b25ec8b922a4c7aa32cbd7ecf82d6f8ee4d7a1f6c764b87389254affe
-version: 1.3.0
+# Source SHA-256: b499b316ef8207df0d8045c4f02e6e3c94bf9309ce7ef7dc66d3d87cebfea928
+version: 1.4.0
 title: T4H Start and Orient
 description: Orient Goose and report actual readiness.
 parameters: []

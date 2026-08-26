@@ -1,9 +1,9 @@
-<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-build-and-verify.yaml | Source SHA-256: 669ef0bac73f522b83983beef1dec5449b1d15a91c590737ae3aebd005a521a0 | -->
+<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-build-and-verify.yaml | Source SHA-256: d074ec0147980629e2fa4dc94ffec11cd5eef2a97409dd09646be347ca0009a7 | -->
 # T4H Build and Verify
 
 Platform: `gemini-cli`  
 Canonical workflow: `t4h-build-and-verify`  
-Contract version: `1.3.0`
+Contract version: `1.4.0`
 
 ## Parameters
 

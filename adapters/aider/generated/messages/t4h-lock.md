@@ -1,9 +1,9 @@
-<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-lock.yaml | Source SHA-256: 93787b03faaa94f4e58ff53351a5a789e164e84ddf4c030ca245e24ba629186e | -->
+<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-lock.yaml | Source SHA-256: 95c2f45fd50502e1c0418d3a8ab45407f38b0e1ad2e1aff8b3a35be5a78ade98 | -->
 # T4H Lock Lifecycle
 
 Platform: `aider`  
 Canonical workflow: `t4h-lock`  
-Contract version: `1.3.0`
+Contract version: `1.4.0`
 
 ## Parameters
 

@@ -1,9 +1,9 @@
-<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-test.yaml | Source SHA-256: 8b6e5a062d3d86e1345c9ffc7e212049b895d66c010eff0d925036ca1388fe05 | -->
+<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-test.yaml | Source SHA-256: 5919c1b2621c6458487449252676d460f1c05c62cc49b4c4a90c240bd3f1a95b | -->
 # T4H Test and Verify
 
 Platform: `claude-code`  
 Canonical workflow: `t4h-test`  
-Contract version: `1.3.0`
+Contract version: `1.4.0`
 
 ## Parameters
 

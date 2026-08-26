@@ -7,7 +7,7 @@
   "required": ["schema_version", "contract_version", "id", "title", "category", "purpose", "parameters", "capabilities", "steps", "instructions", "execution", "outputs", "limitations"],
   "properties": {
     "schema_version": {"const": "1.0.0"},
-    "contract_version": {"const": "1.3.0"},
+    "contract_version": {"const": "1.4.0"},
     "id": {"type": "string", "pattern": "^t4h-[a-z0-9-]+$"},
     "title": {"type": "string", "minLength": 1},
     "category": {"type": "string", "minLength": 1},

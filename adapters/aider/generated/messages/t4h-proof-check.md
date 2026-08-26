@@ -1,9 +1,9 @@
-<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-proof-check.yaml | Source SHA-256: 621732c2ad4579dad9a5a78c266a9c6d52bb2636aee997c72a2a8c5a3f5083d2 | -->
+<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-proof-check.yaml | Source SHA-256: eb6a6249926d661c696c18c6fc32bbd586e02cbf2e5b0c958af5edefce556e58 | -->
 # T4H Proof Check
 
 Platform: `aider`  
 Canonical workflow: `t4h-proof-check`  
-Contract version: `1.3.0`
+Contract version: `1.4.0`
 
 ## Parameters
 

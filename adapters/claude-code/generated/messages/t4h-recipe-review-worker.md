@@ -1,9 +1,9 @@
-<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-recipe-review-worker.yaml | Source SHA-256: f5c22058dcd2371c7a20275faadb93b1c9832fdc9856a892a26da55f79296569 | -->
+<!-- GENERATED FILE — DO NOT EDIT | Source: contract/workflows/t4h-recipe-review-worker.yaml | Source SHA-256: d124320b3fd303a87035c6d95d4b45b4696a3e3e4daf61097658ba9b6da6b5d9 | -->
 # T4H Recipe Review Worker
 
 Platform: `claude-code`  
 Canonical workflow: `t4h-recipe-review-worker`  
-Contract version: `1.3.0`
+Contract version: `1.4.0`
 
 ## Parameters
 

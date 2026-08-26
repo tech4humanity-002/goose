@@ -1,0 +1,24 @@
+schema_version: "1.0.0"
+contract_version: "1.4.0"
+capabilities:
+  text-generation:
+    description: Generate text from bounded text input.
+    controls: [input-bounds, output-bounds, usage-telemetry, receipt]
+  multimodal-analysis:
+    description: Analyze a bounded set of text, image, audio, video or document inputs.
+    controls: [media-validation, size-and-count-bounds, provenance, receipt]
+  structured-output:
+    description: Return machine-readable output conforming to a declared schema.
+    controls: [schema-validation, reject-invalid-output, evidence]
+  tool-calling:
+    description: Request governed tool actions without inheriting tool authority.
+    controls: [allowlist, argument-validation, approval, tool-receipt]
+  streaming:
+    description: Deliver incremental output while preserving terminal result semantics.
+    controls: [timeout, cancellation, terminal-status]
+  embeddings:
+    description: Produce vectors for governed retrieval and similarity workflows.
+    controls: [data-classification, model-version-recording, usage-telemetry]
+  batch-processing:
+    description: Execute bounded asynchronous inference with durable job identity.
+    controls: [idempotency, polling-budget, cancellation, recovery]

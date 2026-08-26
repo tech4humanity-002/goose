@@ -19,6 +19,7 @@ Canonical:
 - Authority, approval and safety requirements
 - Idempotency, retries, timeout, recovery and quarantine
 - Results, evidence and receipts
+- Provider-neutral model capabilities and governed inference lifecycle
 
 Adapter-specific:
 
@@ -27,5 +28,6 @@ Adapter-specific:
 - Native/emulated/unsupported capability mappings
 - Runtime installation and authentication
 - Platform telemetry capture
+- Provider SDK, authentication variable and dated mutable-fact references
 
 Generated files are disposable. Deleting and recompiling them must reproduce the committed state exactly.
