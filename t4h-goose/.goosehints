@@ -1,0 +1,9 @@
+# T4H project hints
+
+T4H uses Goose as the orchestration/client layer and bad-mcp as the governed action plane. Do not create duplicate MCP servers when bad-mcp already provides the required capability.
+
+Known bad-mcp inventory: 87 callable tools. Authoritative scope registry: PARTIAL during control-plane migration. Treat callable as callable, not automatically authorised.
+
+Lifecycle vocabulary: task = bounded owned work; job = asynchronous work; worker = scheduled/background execution; agent = delegated specialist execution; lock = concurrency protection; proof = verification.
+
+Always verify before claiming completion. Preserve provenance and identifiers. Require approval before high-impact mutations.

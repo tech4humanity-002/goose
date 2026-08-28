@@ -1,0 +1,15 @@
+version: 1
+recipes:
+  - core/t4h-start.yaml
+  - core/t4h-change-and-proof.yaml
+  - core/t4h-release.yaml
+  - development/t4h-build-and-verify.yaml
+  - jobs/t4h-job.yaml
+  - tasks/t4h-task.yaml
+  - agents/t4h-agent-team.yaml
+  - workers/t4h-worker.yaml
+  - evidence/t4h-proof.yaml
+  - review/t4h-recipe-review-worker.yaml
+  - subrecipes/t4h-inspect.yaml
+  - subrecipes/t4h-test.yaml
+  - subrecipes/t4h-proof-check.yaml

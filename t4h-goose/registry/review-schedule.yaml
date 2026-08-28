@@ -1,0 +1,21 @@
+version: "1.0.0"
+name: t4h-recipe-review
+purpose: "Triggered worker schedule for recipe review."
+schedule:
+  cron: "17 3 * * 1"
+  timezone: "Australia/Sydney"
+  frequency: weekly
+worker:
+  recipe: recipes/review/t4h-recipe-review-worker.yaml
+  trigger_mode: worker_trigger
+  inputs:
+    review_date: "{{ current_date }}"
+policy:
+  inspect_due_and_overdue: true
+  validate_recipe_files: true
+  validate_subrecipe_paths: true
+  report_only_by_default: true
+  silent_review_date_extension: false
+notes:
+  - "The actual worker schedule must be created in the live T4H worker plane; this file is the declarative schedule source."
+  - "If worker_schedule is unavailable, use the CLI/cron fallback only for local review execution."

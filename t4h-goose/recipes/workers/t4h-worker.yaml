@@ -1,0 +1,13 @@
+version: "1.0.0"
+title: "T4H Worker Lifecycle"
+description: "Inspect or execute scheduled/background work without silently creating persistent schedules."
+parameters:
+  - key: worker_request
+    input_type: string
+    requirement: required
+    description: "Worker/schedule operation requested."
+instructions: |
+  Handle the worker request: {{ worker_request }}. Inspect existing schedules/status first. Creating or triggering persistent/background execution is an approved action and must not be performed silently. Record schedule/worker identifiers and verify resulting state. If cancellation/heartbeat semantics are needed but unavailable, report the lifecycle gap explicitly.
+prompt: "Handle this T4H worker request: {{ worker_request }}."
+settings:
+  max_turns: 75

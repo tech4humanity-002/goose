@@ -1,0 +1,13 @@
+version: "1.0.0"
+title: "T4H Proof and Verification"
+description: "Verify that a requested T4H outcome actually occurred and report proof state."
+parameters:
+  - key: outcome
+    input_type: string
+    requirement: required
+    description: "Outcome that must be verified."
+instructions: |
+  Verify the actual outcome: {{ outcome }}. Use the narrowest live proof/health/evidence tools available. Distinguish evidence of execution from evidence of authorisation. Report PASS, WARN, BLOCKED or UNPROVEN with the evidence used.
+prompt: "Verify this T4H outcome: {{ outcome }}."
+settings:
+  max_turns: 75

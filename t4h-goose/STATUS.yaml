@@ -1,0 +1,14 @@
+version: 1
+package: t4h-goose
+status: READY_WITH_WARNINGS
+known_live_inventory:
+  bad_mcp_callable_tools: 87
+known_unproven:
+  - bad_mcp_authoritative_scope_registry
+  - bad_mcp_transport_endpoint_or_command
+  - live_job_lifecycle
+  - live_task_lifecycle
+  - live_worker_lifecycle
+  - live_agent_lifecycle
+  - live_lock_lifecycle
+next_verification: connect actual Mac Goose installation and live bad-mcp transport

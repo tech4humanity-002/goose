@@ -1,0 +1,11 @@
+version: 1
+products:
+  - goose
+  - bad-mcp
+  - github
+  - filesystem
+  - docker
+  - aws
+  - google-drive
+  - memory-oikos
+  - deployment
