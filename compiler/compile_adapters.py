@@ -76,16 +76,35 @@ Return a result conforming to `contract/schemas/result.schema.json` and preserve
 
 def goose_recipe(source: Path, workflow: dict) -> str:
     relative = str(source.relative_to(ROOT))
+    retry = dict(workflow["execution"]["retry"])
+    include_retry = retry.get("max_retries", 0) > 0
+    if include_retry and "checks" not in retry:
+        retry["checks"] = [{"type": "shell", "command": "true"}]
+
+    parameters = []
+    param_refs = []
+    for raw_param in workflow["parameters"]:
+        p = dict(raw_param)
+        if p.get("requirement") == "optional" and "default" not in p:
+            p["default"] = ""
+        parameters.append(p)
+        param_refs.append(f"- {p['key']}: {{{{ {p['key']} }}}}")
+
+    instructions = workflow["instructions"]
+    if param_refs:
+        instructions = instructions.rstrip() + "\n\nParameter values:\n" + "\n".join(param_refs) + "\n"
+
     data = {
         "version": workflow["contract_version"],
         "title": workflow["title"],
         "description": workflow["purpose"],
-        "parameters": workflow["parameters"],
-        "instructions": workflow["instructions"],
+        "parameters": parameters,
+        "instructions": instructions,
         "prompt": f"Execute canonical workflow {workflow['id']} using its supplied parameters.",
         "settings": {"max_turns": workflow["execution"]["max_turns"]},
-        "retry": workflow["execution"]["retry"],
     }
+    if include_retry:
+        data["retry"] = retry
     if workflow["steps"]:
         data["sub_recipes"] = [
             {
@@ -98,7 +117,6 @@ def goose_recipe(source: Path, workflow: dict) -> str:
         ]
     header = generated_header(relative, digest(source))
     return "".join(f"# {line}\n" for line in header.rstrip().splitlines()) + yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=120)
-
 
 def profile_markdown(platform: str, source: Path, profile: dict) -> str:
     relative = str(source.relative_to(ROOT))

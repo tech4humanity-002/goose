@@ -13,11 +13,19 @@ parameters:
   input_type: string
   requirement: optional
   description: Stable key preventing duplicate task execution.
+  default: ''
 instructions: 'Execute the bounded task: {{ task_request }}. Derive or record an idempotency key and check prior receipts.
   Use CREATE → CLAIM → EXECUTE → VERIFY → COMPLETE. Record task identifier and owner. Renew ownership only while progress
   is observable. Retry transient failures within the declared budget. On exhaustion record FAILED or BLOCKED, recovery owner
   and next executable action. Do not claim completion without checking actual result. Emit the structured result and receipt
   contracts.
+
+
+  Parameter values:
+
+  - task_request: {{ task_request }}
+
+  - idempotency_key: {{ idempotency_key }}
 
   '
 prompt: Execute canonical workflow t4h-task using its supplied parameters.
@@ -30,3 +38,6 @@ retry:
   - 2
   - 10
   recovery: release_claim_and_record_failure
+  checks:
+  - type: shell
+    command: 'true'

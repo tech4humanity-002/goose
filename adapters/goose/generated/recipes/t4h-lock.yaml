@@ -17,11 +17,21 @@ parameters:
   input_type: string
   requirement: optional
   description: Stable acquisition replay-protection key.
+  default: ''
 instructions: 'Protect {{ resource }} for {{ owner }}. Inspect current lock state first. Derive or record an idempotency key.
   Acquire only when absent, expired or already owned by the same idempotency key. Record lock_id, owner, acquired_at, lease
   expiry and correlation_id. Verify ownership before mutation and renew only while progress is observable. Release in a finally-equivalent
   path. If release fails, quarantine the resource, name a recovery owner and emit BLOCKED. Never steal a live lock. Emit structured
   result and receipt records.
+
+
+  Parameter values:
+
+  - resource: {{ resource }}
+
+  - owner: {{ owner }}
+
+  - idempotency_key: {{ idempotency_key }}
 
   '
 prompt: Execute canonical workflow t4h-lock using its supplied parameters.
@@ -34,3 +44,6 @@ retry:
   - 2
   - 10
   recovery: quarantine_and_escalate_stale_lock
+  checks:
+  - type: shell
+    command: 'true'

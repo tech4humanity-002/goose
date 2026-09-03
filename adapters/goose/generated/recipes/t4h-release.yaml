@@ -13,6 +13,7 @@ parameters:
   input_type: string
   requirement: optional
   description: Stable release replay-protection key.
+  default: ''
 instructions: 'Execute a governed T4H release for: {{ release_request }}.
 
   Build and verify first. Require explicit approval before deployment or other external effects. Complete final proof before
@@ -21,6 +22,13 @@ instructions: 'Execute a governed T4H release for: {{ release_request }}.
   Record the release idempotency key and pre-release revision. Suppress a duplicate release already proven successful. On
   deployment failure invoke the rollback recipe with the recorded revision, verify recovery, and emit structured result and
   receipt records.
+
+
+  Parameter values:
+
+  - release_request: {{ release_request }}
+
+  - idempotency_key: {{ idempotency_key }}
 
   '
 prompt: Execute canonical workflow t4h-release using its supplied parameters.
@@ -32,6 +40,9 @@ retry:
   backoff_seconds:
   - 10
   recovery: invoke_t4h_rollback
+  checks:
+  - type: shell
+    command: 'true'
 sub_recipes:
 - name: t4h-build-and-verify
   path: ./t4h-build-and-verify.yaml

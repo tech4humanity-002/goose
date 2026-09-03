@@ -13,8 +13,3 @@ instructions: 'Operate as a T4H Goose session. Read the project .goosehints and 
 prompt: Execute canonical workflow t4h-start using its supplied parameters.
 settings:
   max_turns: 75
-retry:
-  max_retries: 0
-  timeout_seconds: 300
-  backoff_seconds: []
-  recovery: report_blocked

@@ -14,12 +14,12 @@ instructions: 'Inspect the workspace for the objective: {{ objective }}.
   Read relevant instructions first. Identify the repository, changed files, relevant implementation, tests and verification
   mechanisms. Do not mutate anything.
 
+
+  Parameter values:
+
+  - objective: {{ objective }}
+
   '
 prompt: Execute canonical workflow t4h-inspect using its supplied parameters.
 settings:
   max_turns: 30
-retry:
-  max_retries: 0
-  timeout_seconds: 300
-  backoff_seconds: []
-  recovery: report_blocked

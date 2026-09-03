@@ -31,12 +31,12 @@ instructions: 'Run the T4H recipe review process for {{ review_date }}.
 
   The authoritative scope registry remains PARTIAL; do not interpret callable bad-mcp tools as proven grants.
 
+
+  Parameter values:
+
+  - review_date: {{ review_date }}
+
   '
 prompt: Execute canonical workflow t4h-recipe-review-worker using its supplied parameters.
 settings:
   max_turns: 80
-retry:
-  max_retries: 0
-  timeout_seconds: 300
-  backoff_seconds: []
-  recovery: report_blocked

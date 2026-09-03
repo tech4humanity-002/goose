@@ -12,12 +12,12 @@ parameters:
 instructions: 'Verify the actual outcome: {{ outcome }}. Use the narrowest live proof/health/evidence tools available. Distinguish
   evidence of execution from evidence of authorisation. Report PASS, WARN, BLOCKED or UNPROVEN with the evidence used.
 
+
+  Parameter values:
+
+  - outcome: {{ outcome }}
+
   '
 prompt: Execute canonical workflow t4h-proof using its supplied parameters.
 settings:
   max_turns: 75
-retry:
-  max_retries: 0
-  timeout_seconds: 300
-  backoff_seconds: []
-  recovery: report_blocked

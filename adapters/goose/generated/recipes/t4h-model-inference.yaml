@@ -25,6 +25,7 @@ parameters:
   input_type: string
   requirement: optional
   description: Stable key preventing duplicate externally consequential inference.
+  default: ''
 instructions: 'Execute {{ request }} using {{ platform_profile }} with inputs {{ input_manifest }} and output contract {{
   output_schema }}.
 
@@ -44,6 +45,19 @@ instructions: 'Execute {{ request }} using {{ platform_profile }} with inputs {{
 
   never substitute an unverified model response for a proven result.
 
+
+  Parameter values:
+
+  - request: {{ request }}
+
+  - platform_profile: {{ platform_profile }}
+
+  - input_manifest: {{ input_manifest }}
+
+  - output_schema: {{ output_schema }}
+
+  - idempotency_key: {{ idempotency_key }}
+
   '
 prompt: Execute canonical workflow t4h-model-inference using its supplied parameters.
 settings:
@@ -55,6 +69,9 @@ retry:
   - 2
   - 10
   recovery: cancel_or_quarantine_inference
+  checks:
+  - type: shell
+    command: 'true'
 sub_recipes:
 - name: t4h-inspect
   path: ./t4h-inspect.yaml

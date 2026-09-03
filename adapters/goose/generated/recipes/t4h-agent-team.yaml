@@ -13,12 +13,20 @@ parameters:
   input_type: string
   requirement: optional
   description: Stable delegation replay-protection key.
+  default: ''
 instructions: 'Coordinate specialist agents for: {{ objective }}. Derive or record an idempotency key and inspect active equivalent
   work before spawning. Determine whether delegation adds value. If agent tools are live and authorised, discover suitable
   agents, spawn only the minimum required specialists, communicate explicit objectives, collect results, and reconcile them
   within the timeout and budget. Use consensus only for a real multi-agent decision. Preserve agent IDs and correlation IDs.
   Reap or quarantine timed-out agents when supported and name a recovery owner otherwise. Never claim success merely because
   agents were spawned. Emit structured result and receipt records.
+
+
+  Parameter values:
+
+  - objective: {{ objective }}
+
+  - idempotency_key: {{ idempotency_key }}
 
   '
 prompt: Execute canonical workflow t4h-agent-team using its supplied parameters.
@@ -30,3 +38,6 @@ retry:
   backoff_seconds:
   - 10
   recovery: terminate_or_quarantine_agents
+  checks:
+  - type: shell
+    command: 'true'

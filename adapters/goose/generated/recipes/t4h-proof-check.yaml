@@ -14,12 +14,12 @@ instructions: 'Prove the outcome: {{ outcome }}.
   Separate execution evidence, result evidence and authorisation evidence. Return PASS, WARN, BLOCKED or UNPROVEN with the
   evidence used.
 
+
+  Parameter values:
+
+  - outcome: {{ outcome }}
+
   '
 prompt: Execute canonical workflow t4h-proof-check using its supplied parameters.
 settings:
   max_turns: 30
-retry:
-  max_retries: 0
-  timeout_seconds: 300
-  backoff_seconds: []
-  recovery: report_blocked

@@ -13,11 +13,19 @@ parameters:
   input_type: string
   requirement: optional
   description: Stable key preventing duplicate job creation.
+  default: ''
 instructions: 'Use the T4H job lifecycle for: {{ job_request }}. 1. Define the job precisely and derive or record an idempotency
   key. 2. Check prior receipts before creating a job. 3. Create only when no completed or active equivalent exists. 4. Record
   job_id. 5. Poll with bounded backoff until terminal state, timeout or explicit blocked condition. 6. Retrieve and verify
   the result. 7. On timeout attempt safe cancellation when available and record the recovery owner. If unavailable, report
   UNPROVEN/BLOCKED; do not simulate success. Emit the structured result and receipt contracts.
+
+
+  Parameter values:
+
+  - job_request: {{ job_request }}
+
+  - idempotency_key: {{ idempotency_key }}
 
   '
 prompt: Execute canonical workflow t4h-job using its supplied parameters.
@@ -31,3 +39,6 @@ retry:
   - 15
   - 30
   recovery: cancel_or_quarantine
+  checks:
+  - type: shell
+    command: 'true'

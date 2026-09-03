@@ -13,6 +13,7 @@ parameters:
   input_type: string
   requirement: optional
   description: Stable key used to detect replay of the same requested change.
+  default: ''
 instructions: 'Complete this development request: {{ request }}.
 
   Use inspect first, then implement the smallest correct change, then test, then proof.
@@ -23,6 +24,13 @@ instructions: 'Complete this development request: {{ request }}.
   Derive or record an idempotency key before mutation, check for an existing successful receipt, and do not repeat a completed
   side effect. Enforce the retry/timeout contract below. On exhausted retries, restore the pre-change state when safe and
   return a structured BLOCKED or DEGRADED result with recovery details.
+
+
+  Parameter values:
+
+  - request: {{ request }}
+
+  - idempotency_key: {{ idempotency_key }}
 
   '
 prompt: Execute canonical workflow t4h-build-and-verify using its supplied parameters.

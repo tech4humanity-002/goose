@@ -13,11 +13,19 @@ parameters:
   input_type: string
   requirement: optional
   description: Stable key for schedule or trigger deduplication.
+  default: ''
 instructions: 'Handle the worker request: {{ worker_request }}. Inspect existing schedules, status and receipts first. Derive
   or record an idempotency key. Creating or triggering persistent/background execution is an approved action and must not
   be performed silently. Record schedule/worker identifiers, lease owner, heartbeat expectation and resulting state. Suppress
   duplicate schedules/triggers. On timeout or stale heartbeat attempt safe cancellation or quarantine and name a recovery
   owner. Emit structured result and receipt records.
+
+
+  Parameter values:
+
+  - worker_request: {{ worker_request }}
+
+  - idempotency_key: {{ idempotency_key }}
 
   '
 prompt: Execute canonical workflow t4h-worker using its supplied parameters.
@@ -30,3 +38,6 @@ retry:
   - 5
   - 30
   recovery: cancel_or_quarantine
+  checks:
+  - type: shell
+    command: 'true'
