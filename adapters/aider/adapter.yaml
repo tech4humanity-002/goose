@@ -1,0 +1,7 @@
+adapter: aider
+contract_version: "1.4.0"
+runtime_command: aider
+entrypoint: adapters/aider/bin/t4h-aider
+native_features: [git, repository-map, architect-mode, lint, test, message-file]
+emulated_features: [workflow-composition, structured-results, receipts, retries, recovery]
+unsupported_capabilities: [native-jobs, native-workers, native-agent-teams, native-lock-leases]

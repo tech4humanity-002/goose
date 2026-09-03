@@ -1,0 +1,8 @@
+version: "1.0.0"
+title: "T4H Start and Orient"
+description: "Orient Goose to the T4H operating contract, inspect the workspace, and report readiness without assuming unproven capabilities."
+instructions: |
+  Operate as a T4H Goose session. Read the project .goosehints and T4H operating rules. Inspect the current workspace and available tools. Treat callable bad-mcp tools as callable but not necessarily authorised because the current scope registry is PARTIAL. Report READY, READY WITH WARNINGS, or BLOCKED. Do not mutate infrastructure or external systems during orientation.
+prompt: "Start by orienting to the current T4H workspace. Verify what is actually available, then report concrete readiness and the highest-priority blocker if any."
+settings:
+  max_turns: 75

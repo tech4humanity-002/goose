@@ -1,0 +1,43 @@
+schema_version: 1.0.0
+contract_version: 1.4.0
+id: t4h-task
+title: T4H Task Lifecycle
+category: tasks
+purpose: Create, claim, execute, verify and complete a bounded task.
+parameters:
+- key: task_request
+  input_type: string
+  requirement: required
+  description: Bounded task to execute.
+- key: idempotency_key
+  input_type: string
+  requirement: optional
+  description: Stable key preventing duplicate task execution.
+capabilities:
+- bad-mcp-task-tools
+steps: []
+instructions: 'Execute the bounded task: {{ task_request }}. Derive or record an idempotency key and check prior receipts.
+  Use CREATE → CLAIM → EXECUTE → VERIFY → COMPLETE. Record task identifier and owner. Renew ownership only while progress
+  is observable. Retry transient failures within the declared budget. On exhaustion record FAILED or BLOCKED, recovery owner
+  and next executable action. Do not claim completion without checking actual result. Emit the structured result and receipt
+  contracts.
+
+  '
+execution:
+  max_turns: 75
+  retry:
+    max_retries: 2
+    timeout_seconds: 600
+    backoff_seconds:
+    - 2
+    - 10
+    recovery: release_claim_and_record_failure
+outputs:
+- task-id
+- owner
+- completion-status
+- structured-result
+- receipt
+limitations:
+- Failure and dependency semantics require live validation
+

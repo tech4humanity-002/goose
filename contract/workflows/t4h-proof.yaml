@@ -1,0 +1,32 @@
+schema_version: 1.0.0
+contract_version: 1.4.0
+id: t4h-proof
+title: T4H Proof and Verification
+category: evidence
+purpose: Verify an outcome and distinguish execution from authority evidence.
+parameters:
+- key: outcome
+  input_type: string
+  requirement: required
+  description: Outcome that must be verified.
+capabilities:
+- proof-tools-if-configured
+steps: []
+instructions: 'Verify the actual outcome: {{ outcome }}. Use the narrowest live proof/health/evidence tools available. Distinguish
+  evidence of execution from evidence of authorisation. Report PASS, WARN, BLOCKED or UNPROVEN with the evidence used.
+
+  '
+execution:
+  max_turns: 75
+  retry:
+    max_retries: 0
+    timeout_seconds: 300
+    backoff_seconds: []
+    recovery: report_blocked
+outputs:
+- proof-status
+- evidence-list
+- structured-result
+limitations:
+- Proof quality depends on live evidence tools
+

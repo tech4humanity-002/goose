@@ -1,0 +1,55 @@
+schema_version: 1.0.0
+contract_version: 1.4.0
+id: t4h-change-and-proof
+title: T4H Change and Proof
+category: core
+purpose: Govern a change from inspection through proof and recovery.
+parameters:
+- key: request
+  input_type: string
+  requirement: required
+  description: Requested change.
+- key: idempotency_key
+  input_type: string
+  requirement: optional
+  description: Stable replay-protection key.
+capabilities:
+- workspace
+- git
+- available-action-tools
+steps:
+- workflow: t4h-inspect
+  bindings:
+    objective: '{{ request }}'
+  description: Inspect before mutation.
+- workflow: t4h-proof-check
+  bindings:
+    outcome: '{{ request }}'
+  description: Verify the final outcome.
+instructions: 'Execute the requested change: {{ request }}.
+
+  Inspect first. Make only necessary changes. Verify after mutation. Require approval for external, infrastructure, destructive,
+  secret, deployment or financial effects. Finish only with evidence.
+
+  Before mutation derive or record an idempotency key, check prior receipts, capture recoverable pre-change state and suppress
+  duplicate completed actions. On failure, retry within the declared budget, recover the pre-change state when safe, and emit
+  the structured result contract.
+
+  '
+execution:
+  max_turns: 100
+  retry:
+    max_retries: 2
+    timeout_seconds: 600
+    backoff_seconds:
+    - 2
+    - 10
+    recovery: invoke_t4h_rollback
+outputs:
+- change-result
+- proof-status
+- structured-result
+- receipt
+limitations:
+- Cannot prove unavailable external systems
+

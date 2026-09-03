@@ -1,0 +1,54 @@
+schema_version: 1.0.0
+contract_version: 1.4.0
+id: t4h-recipe-review-worker
+title: T4H Recipe Review Worker
+category: governance
+purpose: Review due recipes and validate registry integrity.
+parameters:
+- key: review_date
+  input_type: string
+  requirement: required
+  description: Current review date in YYYY-MM-DD format.
+capabilities:
+- filesystem
+- goose-cli
+- recipe-registry
+steps: []
+instructions: 'Run the T4H recipe review process for {{ review_date }}.
+
+
+  1. Read registry/recipe-index.yaml.
+
+  2. Identify recipes where review_due <= {{ review_date }} or status is OVERDUE.
+
+  3. Validate each due recipe using the Goose recipe validation command where available.
+
+  4. Inspect referenced subrecipes and confirm every referenced path exists.
+
+  5. Check required resources/extensions and known limitations.
+
+  6. Produce a review report listing PASS, WARN, BLOCKED and OVERDUE items.
+
+  7. If the T4H worker plane is available, record the review job/result and correlation identifier.
+
+  8. Do not silently modify recipes or extend review dates merely to clear a warning.
+
+
+  The authoritative scope registry remains PARTIAL; do not interpret callable bad-mcp tools as proven grants.
+
+  '
+execution:
+  max_turns: 80
+  retry:
+    max_retries: 0
+    timeout_seconds: 300
+    backoff_seconds: []
+    recovery: report_blocked
+outputs:
+- review-report
+- overdue-list
+- validation-results
+- structured-result
+limitations:
+- Does not silently modify production recipes
+

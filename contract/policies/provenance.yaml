@@ -1,0 +1,10 @@
+version: "1.2.0"
+receipt_schema: schemas/receipt.schema.json
+result_schema: schemas/result.schema.json
+required_fields: [receipt_id, operation_id, idempotency_key, action, actor, timestamp, tool, correlation_id, result_digest, verification_status, evidence, redactions]
+rules:
+  - "Do not report callable as authorised without authoritative scope evidence."
+  - "Do not report intended state as achieved state."
+  - "Retain job/task/agent/worker identifiers when present."
+  - "Hash canonical structured results with SHA-256 before recording a receipt."
+  - "Redact secrets and personal data before committing validation receipts."

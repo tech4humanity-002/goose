@@ -1,0 +1,16 @@
+version: "1.0.0"
+title: "T4H Agent Team"
+description: "Coordinate specialist agents for parallel work while preserving identifiers, ownership and verification."
+parameters:
+  - key: objective
+    input_type: string
+    requirement: required
+    description: "Objective for the specialist agent team."
+instructions: |
+  Coordinate specialist agents for: {{ objective }}. Determine whether delegation adds value. If agent tools are live and authorised, discover suitable agents, spawn only the minimum required specialists, communicate explicit objectives, collect results, and reconcile them. Use consensus only for a real multi-agent decision. Preserve agent IDs and correlation IDs. Never claim success merely because agents were spawned.
+prompt: "Coordinate a T4H specialist agent team for {{ objective }}."
+extensions:
+  - type: platform
+    name: summon
+settings:
+  max_turns: 75

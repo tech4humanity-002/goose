@@ -1,0 +1,4 @@
+version: 1
+default_mode: smart_approve
+allow: [read_local_files, git_status_diff_log, read_github, read_drive, proof_checks, health_checks]
+approve: [write_project_files, git_commit_or_push, create_task_or_job, spawn_agent, schedule_worker, trigger_worker, docker_mutation, aws_change, deployment, dns_or_cloudfront_change, secret_access, external_message_or_email, financial_write, destructive_operation]

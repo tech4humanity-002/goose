@@ -1,0 +1,7 @@
+adapter: goose
+contract_version: "1.4.0"
+runtime_command: goose
+entrypoint: adapters/goose/bin/t4h-goose
+native_features: [recipes, subrecipes, extensions, schedules]
+emulated_features: [structured-results, receipts, idempotency-ledger]
+unsupported_capabilities: []

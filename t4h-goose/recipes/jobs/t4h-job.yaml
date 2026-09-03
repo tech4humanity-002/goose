@@ -1,0 +1,13 @@
+version: "1.0.0"
+title: "T4H Job Lifecycle"
+description: "Execute or inspect an asynchronous T4H job using create, status and result semantics."
+parameters:
+  - key: job_request
+    input_type: string
+    requirement: required
+    description: "Description of the asynchronous job to perform."
+instructions: |
+  Use the T4H job lifecycle for: {{ job_request }}. 1. Define the job precisely. 2. Create the job using the live T4H job capability if available. 3. Record job_id. 4. Monitor status until terminal state or explicit blocked condition. 5. Retrieve result. 6. Verify result before claiming completion. If unavailable, report UNPROVEN/BLOCKED; do not simulate success.
+prompt: "Run the T4H job lifecycle for {{ job_request }}."
+settings:
+  max_turns: 75

@@ -1,0 +1,35 @@
+schema_version: 1.0.0
+contract_version: 1.4.0
+id: t4h-inspect
+title: T4H Inspect Workspace
+category: subrecipe
+purpose: Inspect workspace state without mutation.
+parameters:
+- key: objective
+  input_type: string
+  requirement: required
+  description: Objective being investigated.
+capabilities:
+- workspace
+- filesystem
+- git
+steps: []
+instructions: 'Inspect the workspace for the objective: {{ objective }}.
+
+  Read relevant instructions first. Identify the repository, changed files, relevant implementation, tests and verification
+  mechanisms. Do not mutate anything.
+
+  '
+execution:
+  max_turns: 30
+  retry:
+    max_retries: 0
+    timeout_seconds: 300
+    backoff_seconds: []
+    recovery: report_blocked
+outputs:
+- inspection-result
+- structured-result
+limitations:
+- Visibility depends on available read tools
+

@@ -1,0 +1,42 @@
+schema_version: 1.0.0
+contract_version: 1.4.0
+id: t4h-worker
+title: T4H Worker Lifecycle
+category: workers
+purpose: Inspect and govern scheduled or background execution.
+parameters:
+- key: worker_request
+  input_type: string
+  requirement: required
+  description: Worker/schedule operation requested.
+- key: idempotency_key
+  input_type: string
+  requirement: optional
+  description: Stable key for schedule or trigger deduplication.
+capabilities:
+- bad-mcp-worker-tools
+steps: []
+instructions: 'Handle the worker request: {{ worker_request }}. Inspect existing schedules, status and receipts first. Derive
+  or record an idempotency key. Creating or triggering persistent/background execution is an approved action and must not
+  be performed silently. Record schedule/worker identifiers, lease owner, heartbeat expectation and resulting state. Suppress
+  duplicate schedules/triggers. On timeout or stale heartbeat attempt safe cancellation or quarantine and name a recovery
+  owner. Emit structured result and receipt records.
+
+  '
+execution:
+  max_turns: 75
+  retry:
+    max_retries: 2
+    timeout_seconds: 900
+    backoff_seconds:
+    - 5
+    - 30
+    recovery: cancel_or_quarantine
+outputs:
+- worker-status
+- schedule-id
+- structured-result
+- receipt
+limitations:
+- Cancellation and heartbeat require live validation
+

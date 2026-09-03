@@ -1,0 +1,20 @@
+# GENERATED FILE — DO NOT EDIT
+# Source: contract/workflows/t4h-start.yaml
+# Source SHA-256: b499b316ef8207df0d8045c4f02e6e3c94bf9309ce7ef7dc66d3d87cebfea928
+version: 1.4.0
+title: T4H Start and Orient
+description: Orient Goose and report actual readiness.
+parameters: []
+instructions: 'Operate as a T4H Goose session. Read the project .goosehints and T4H operating rules. Inspect the current workspace
+  and available tools. Treat callable bad-mcp tools as callable but not necessarily authorised because the current scope registry
+  is PARTIAL. Report READY, READY WITH WARNINGS, or BLOCKED. Do not mutate infrastructure or external systems during orientation.
+
+  '
+prompt: Execute canonical workflow t4h-start using its supplied parameters.
+settings:
+  max_turns: 75
+retry:
+  max_retries: 0
+  timeout_seconds: 300
+  backoff_seconds: []
+  recovery: report_blocked

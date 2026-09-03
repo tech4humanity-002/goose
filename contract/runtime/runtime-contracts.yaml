@@ -1,0 +1,22 @@
+version: "1.2.0"
+idempotency:
+  required_for_mutation: true
+  key_fields: [recipe_id, canonical_target, canonical_request]
+  completed_replay: return_prior_receipt
+  active_replay: return_in_progress
+  failed_replay: require_recovery_or_new_attempt
+timeouts:
+  required_for_long_running_operations: true
+  terminal_states: [REAL, PARTIAL, BLOCKED, DEGRADED, QUARANTINED]
+retry:
+  transient_only: true
+  bounded: true
+  preserve_attempt_receipts: true
+recovery:
+  pre_change_state_required_when_reversible: true
+  recovery_owner_required_on_failure: true
+  verify_after_recovery: true
+  quarantine_when_unrecoverable: true
+outputs:
+  result_schema: schemas/result.schema.json
+  receipt_schema: schemas/receipt.schema.json

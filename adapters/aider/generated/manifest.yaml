@@ -1,0 +1,26 @@
+generated: true
+adapter: aider
+contract_version: 1.4.0
+workflow_count: 16
+workflows:
+- t4h-agent-team
+- t4h-build-and-verify
+- t4h-change-and-proof
+- t4h-inspect
+- t4h-job
+- t4h-lock
+- t4h-model-inference
+- t4h-proof-check
+- t4h-proof
+- t4h-recipe-review-worker
+- t4h-release
+- t4h-rollback
+- t4h-start
+- t4h-task
+- t4h-test
+- t4h-worker
+unsupported_capabilities:
+- native-jobs
+- native-workers
+- native-agent-teams
+- native-lock-leases

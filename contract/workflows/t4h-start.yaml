@@ -1,0 +1,32 @@
+schema_version: 1.0.0
+contract_version: 1.4.0
+id: t4h-start
+title: T4H Start and Orient
+category: core
+purpose: Orient Goose and report actual readiness.
+parameters: []
+capabilities:
+- workspace
+- goose-config
+- bad-mcp-if-configured
+steps: []
+instructions: 'Operate as a T4H Goose session. Read the project .goosehints and T4H operating rules. Inspect the current workspace
+  and available tools. Treat callable bad-mcp tools as callable but not necessarily authorised because the current scope registry
+  is PARTIAL. Report READY, READY WITH WARNINGS, or BLOCKED. Do not mutate infrastructure or external systems during orientation.
+
+  '
+execution:
+  max_turns: 75
+  retry:
+    max_retries: 0
+    timeout_seconds: 300
+    backoff_seconds: []
+    recovery: report_blocked
+outputs:
+- readiness-status
+- blockers
+- warnings
+- structured-result
+limitations:
+- Live bad-mcp authority requires runtime verification
+

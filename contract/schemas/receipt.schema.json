@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tech4humanity.com/schemas/goose/receipt.schema.json",
+  "title": "T4H Execution Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "receipt_id", "operation_id", "idempotency_key", "action", "actor", "timestamp", "tool", "correlation_id", "result_digest", "verification_status", "evidence", "redactions"],
+  "properties": {
+    "schema_version": {"const": "1.2.0"},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "operation_id": {"type": "string", "minLength": 1},
+    "idempotency_key": {"type": "string", "minLength": 1},
+    "action": {"type": "string", "minLength": 1},
+    "actor": {"type": "string", "minLength": 1},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "tool": {"type": "string", "minLength": 1},
+    "correlation_id": {"type": "string", "minLength": 1},
+    "result_digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "verification_status": {"enum": ["PASS", "WARN", "BLOCKED", "UNPROVEN"]},
+    "evidence": {"type": "array", "items": {"type": "string"}},
+    "redactions": {"type": "array", "items": {"type": "string"}}
+  }
+}

@@ -1,0 +1,22 @@
+version: "1.2.0"
+lifecycles:
+  task: [DEDUPE, CREATE, CLAIM, EXECUTE, VERIFY, COMPLETE, RECOVER]
+  job: [DEDUPE, CREATE, RUN, STATUS, RESULT, TIMEOUT, RECOVER]
+  worker: [DISCOVER, DEDUPE, SCHEDULE, TRIGGER, RUN, HEARTBEAT, STATUS, RECOVER]
+  agent: [DISCOVER, DEDUPE, SPAWN, MESSAGE, COLLABORATE, CONSENSUS, REAP, RECOVER]
+  lock: [INSPECT, ACQUIRE, VERIFY, RENEW, RELEASE, RECOVER]
+  rollback: [INSPECT, AUTHORISE, RESTORE, VERIFY, RECORD]
+  proof: [CHECK, VERIFY, RECORD]
+known_gaps:
+  - task failure state
+  - live task retry/idempotency verification
+  - task dependency model
+  - live job cancellation
+  - job progress/heartbeat
+  - live worker cancellation
+  - worker heartbeat/lease
+  - live agent termination/reaping
+  - agent timeout/budget
+  - live stale lock recovery
+  - live rollback execution
+  - authoritative scope registry

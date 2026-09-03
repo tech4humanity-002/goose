@@ -1,0 +1,33 @@
+schema_version: 1.0.0
+contract_version: 1.4.0
+id: t4h-test
+title: T4H Test and Verify
+category: subrecipe
+purpose: Run bounded tests and report evidence.
+parameters:
+- key: objective
+  input_type: string
+  requirement: required
+  description: Change or outcome to verify.
+capabilities:
+- test-tools
+steps: []
+instructions: 'Verify: {{ objective }}.
+
+  Run the narrowest relevant tests/checks available. If a check fails, diagnose and retry using the next known safe method.
+  Report commands/checks, results and remaining blockers. Never claim success without evidence.
+
+  '
+execution:
+  max_turns: 40
+  retry:
+    max_retries: 0
+    timeout_seconds: 300
+    backoff_seconds: []
+    recovery: report_blocked
+outputs:
+- test-results
+- structured-result
+limitations:
+- Coverage depends on available tests
+

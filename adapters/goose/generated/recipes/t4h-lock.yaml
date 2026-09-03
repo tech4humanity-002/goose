@@ -1,0 +1,36 @@
+# GENERATED FILE — DO NOT EDIT
+# Source: contract/workflows/t4h-lock.yaml
+# Source SHA-256: 95c2f45fd50502e1c0418d3a8ab45407f38b0e1ad2e1aff8b3a35be5a78ade98
+version: 1.4.0
+title: T4H Lock Lifecycle
+description: Protect shared mutable state with a bounded lock lifecycle.
+parameters:
+- key: resource
+  input_type: string
+  requirement: required
+  description: Canonical shared-resource identifier.
+- key: owner
+  input_type: string
+  requirement: required
+  description: Actor responsible for the lock.
+- key: idempotency_key
+  input_type: string
+  requirement: optional
+  description: Stable acquisition replay-protection key.
+instructions: 'Protect {{ resource }} for {{ owner }}. Inspect current lock state first. Derive or record an idempotency key.
+  Acquire only when absent, expired or already owned by the same idempotency key. Record lock_id, owner, acquired_at, lease
+  expiry and correlation_id. Verify ownership before mutation and renew only while progress is observable. Release in a finally-equivalent
+  path. If release fails, quarantine the resource, name a recovery owner and emit BLOCKED. Never steal a live lock. Emit structured
+  result and receipt records.
+
+  '
+prompt: Execute canonical workflow t4h-lock using its supplied parameters.
+settings:
+  max_turns: 50
+retry:
+  max_retries: 2
+  timeout_seconds: 120
+  backoff_seconds:
+  - 2
+  - 10
+  recovery: quarantine_and_escalate_stale_lock

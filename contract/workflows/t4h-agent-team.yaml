@@ -1,0 +1,44 @@
+schema_version: 1.0.0
+contract_version: 1.4.0
+id: t4h-agent-team
+title: T4H Agent Team
+category: agents
+purpose: Delegate bounded work and reconcile specialist results.
+parameters:
+- key: objective
+  input_type: string
+  requirement: required
+  description: Objective for the specialist agent team.
+- key: idempotency_key
+  input_type: string
+  requirement: optional
+  description: Stable delegation replay-protection key.
+capabilities:
+- summon
+- bad-mcp-agent-tools-if-configured
+steps: []
+instructions: 'Coordinate specialist agents for: {{ objective }}. Derive or record an idempotency key and inspect active equivalent
+  work before spawning. Determine whether delegation adds value. If agent tools are live and authorised, discover suitable
+  agents, spawn only the minimum required specialists, communicate explicit objectives, collect results, and reconcile them
+  within the timeout and budget. Use consensus only for a real multi-agent decision. Preserve agent IDs and correlation IDs.
+  Reap or quarantine timed-out agents when supported and name a recovery owner otherwise. Never claim success merely because
+  agents were spawned. Emit structured result and receipt records.
+
+  '
+execution:
+  max_turns: 75
+  retry:
+    max_retries: 1
+    timeout_seconds: 900
+    backoff_seconds:
+    - 10
+    recovery: terminate_or_quarantine_agents
+outputs:
+- agent-ids
+- consensus
+- proof
+- structured-result
+- receipt
+limitations:
+- Termination and budget require live validation
+

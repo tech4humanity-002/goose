@@ -1,0 +1,21 @@
+version: "1.4.0"
+name: T4H Agent Operating Contract — Gemini Platform Profile
+status: READY_WITH_RUNTIME_WARNINGS
+canonical_contract:
+  workflows: 16
+  platform_profiles: 1
+  source: contract/
+generated_adapters:
+  count: 5
+  names: [goose, aider, codex, claude-code, gemini-cli]
+  generated_files: 90
+conformance:
+  contract: PASS
+  adapter_drift: PASS
+  cross_adapter_dry_runs: 80/80
+  receipt: receipts/contract-adapter-conformance-v1.4.0.json
+known_unproven:
+  - live runtime credentials and authority
+  - live end-to-end execution for each platform adapter
+  - external side-effect receipts
+rule: configuration and dry-run success must not be reported as live runtime success

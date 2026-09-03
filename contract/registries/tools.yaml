@@ -1,0 +1,20 @@
+version: 1
+registry_status: PARTIAL
+source: supplied T4H bad-mcp callable inventory
+callable_tool_count: 87
+scope_authority: UNPROVEN
+scope_note: "Authoritative scope discovery is unavailable during control-plane migration."
+function_groups:
+  agents: [agent_list, agent_spawn, agent_message, agent_inbox, agent_consensus]
+  jobs: [job_create, job_get, job_list, job_result]
+  tasks: [task_create, task_claim, task_complete]
+  workers: [worker_list_schedules, worker_schedule, worker_status, worker_trigger]
+  locks: [lock_acquire, lock_release]
+  proof: [check_runtime_health, check_s3_receipt, check_supabase_event, check_webhook_delivery, run_mission_proof]
+  filesystem: [filesystem_list, filesystem_read, filesystem_write, filesystem_copy, filesystem_move]
+  git_github: [git_execute, github_repo_read, github_file_read, github_file_write]
+  aws: [aws_identity, aws_read, aws_change, ec2_instances, lambda_functions, cloudwatch_alarms, cloudfront_list_distributions, cloudfront_invalidate, route53_zones, route53_list_records, route53_upsert, s3_buckets, s3_put, s3_sync, ssm_online]
+  docker: [docker_ps, docker_logs, docker_run, docker_stop]
+  google_drive: [gdrive_list, gdrive_read, gdrive_write]
+  memory: [memory_ingest, memory_query, memory_relate]
+  deployment: [deploy_release]

@@ -1,0 +1,32 @@
+# GENERATED FILE — DO NOT EDIT
+# Source: contract/workflows/t4h-worker.yaml
+# Source SHA-256: 7e483ee956f7c6efb3c053d3bd179b3f9ca99fca13556b935a2b80b2b6a8f2dd
+version: 1.4.0
+title: T4H Worker Lifecycle
+description: Inspect and govern scheduled or background execution.
+parameters:
+- key: worker_request
+  input_type: string
+  requirement: required
+  description: Worker/schedule operation requested.
+- key: idempotency_key
+  input_type: string
+  requirement: optional
+  description: Stable key for schedule or trigger deduplication.
+instructions: 'Handle the worker request: {{ worker_request }}. Inspect existing schedules, status and receipts first. Derive
+  or record an idempotency key. Creating or triggering persistent/background execution is an approved action and must not
+  be performed silently. Record schedule/worker identifiers, lease owner, heartbeat expectation and resulting state. Suppress
+  duplicate schedules/triggers. On timeout or stale heartbeat attempt safe cancellation or quarantine and name a recovery
+  owner. Emit structured result and receipt records.
+
+  '
+prompt: Execute canonical workflow t4h-worker using its supplied parameters.
+settings:
+  max_turns: 75
+retry:
+  max_retries: 2
+  timeout_seconds: 900
+  backoff_seconds:
+  - 5
+  - 30
+  recovery: cancel_or_quarantine

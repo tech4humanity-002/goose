@@ -1,0 +1,7 @@
+adapter: gemini-cli
+contract_version: "1.4.0"
+runtime_command: gemini
+entrypoint: adapters/gemini-cli/bin/t4h-gemini
+native_features: [non-interactive-prompt, tools, project-instructions]
+emulated_features: [workflow-composition, structured-results, receipts, retries]
+unsupported_capabilities: [native-worker-schedules, native-lock-leases]

@@ -1,0 +1,8 @@
+read:
+  - contract/instructions/GLOBAL.md
+  - contract/instructions/COMPLETION.md
+  - contract/runtime/runtime-contracts.yaml
+auto-commits: false
+dirty-commits: false
+attribute-author: false
+attribute-committer: false

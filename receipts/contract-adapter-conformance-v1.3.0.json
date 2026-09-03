@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.3.0",
+  "receipt_type": "contract-adapter-conformance",
+  "timestamp": "2026-08-26T09:10:00Z",
+  "status": "PASS",
+  "contract": {
+    "workflows": 15,
+    "files": 37,
+    "digest": "sha256:19442d9e9619a1b61ed8590a67f1dee3e061020970dfa47406376fdf2fa0f93f"
+  },
+  "adapters": {
+    "count": 5,
+    "generated_files": 80,
+    "dry_runs": 75,
+    "files": 99,
+    "digest": "sha256:7cbf63c9387ad1c67d5e39694f09102f293b44ec9df81c73f017f742b50a18e0"
+  },
+  "checks": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "compiler/compile_adapters.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "6f6527312894d26e3cfac59a2bdc59ac6c7ac552ffd6eccfa0b4a82ae79ce1fd"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "conformance/validate_contract.py"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "d6702d8ba82a4ae2b60f2eb445de70b505da30413960611657e24f24cdefd9d1"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "live_runtime_execution": "UNPROVEN_NOT_REQUESTED",
+  "redactions": [
+    "no credentials captured",
+    "command output represented only by SHA-256 digests"
+  ],
+  "receipt_digest": "sha256:0ef558d778fdaa86fa621e6a7c7f47ba689614ce30073277c73d2952f000f9fe"
+}
