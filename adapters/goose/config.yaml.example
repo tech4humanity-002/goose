@@ -1,12 +1,19 @@
 # T4H Goose configuration example.
 # Canonical macOS Goose config: ~/.config/goose/config.yaml
 # Use `goose configure` for provider credentials.
-active_provider: anthropic
+active_provider: openrouter
 providers:
   anthropic:
-    enabled: true
+    enabled: false
     model: claude-sonnet-4-5-20250929
     configured: false
+  openrouter:
+    enabled: true
+    model: nvidia/nemotron-3-ultra-550b-a55b:free
+    configured: false
+    # Free-tier model confirmed working via live t4h-start execution 2026-09-03.
+    # minimax/minimax-m3:free hit shared-pool rate limits under normal load; avoid.
+    # Requires OPENROUTER_API_KEY in environment. goose reads it directly.
 GOOSE_TEMPERATURE: 0.2
 GOOSE_MODE: smart_approve
 GOOSE_TOOLSHIM: true
