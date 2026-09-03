@@ -1,0 +1,11 @@
+version: "2.0.0"
+metadata:
+  name: "runtime-rules-multi-llm"
+  organization: "tech4humanity-002"
+adapters:
+  - name: "claude-code"
+    enabled: true
+  - name: "aider"
+    enabled: true
+  - name: "goose"
+    enabled: true
